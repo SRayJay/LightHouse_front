@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
@@ -8,26 +7,28 @@
 
 <style>
 #app {
-  font-family: 'PingFang SC',Avenir, Helvetica, Arial, sans-serif;
+  font-family: "PingFang SC", Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
- 
+
   /* color: #2c3e50; */
   /* margin-top: 60px; */
 }
-*{
-  margin:0;
+* {
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-ul{
+ul {
   list-style: none;
+  margin-bottom: 0;
 }
-input,button{
+input,
+button {
   outline: none;
 }
-a{
+a {
   text-decoration: none;
   color: #000;
 }

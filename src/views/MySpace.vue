@@ -16,7 +16,11 @@
     </div>
     <div class="rightBar">
       <Header width="75%" :dark="false"></Header>
-      <router-view class="content"></router-view>
+      <router-view v-slot="{ Component }" class="content">
+        <transition name="fade">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
   </div>
 </template>

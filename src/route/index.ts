@@ -3,7 +3,8 @@ import { createRouter, createWebHashHistory, createWebHistory } from "vue-router
 const MySpace = () => import("@V/MySpace.vue");
 const Home = () => import("@V/Home.vue");
 const Setting = () => import("@V/Setting.vue");
-const Islands = () => import("@V/Islands.vue");
+const Islands = () => import("@/views/Islands/Islands.vue");
+const CreateIsland = () => import("@V/Islands/CreateIsland.vue");
 
 const routes = [
   {
@@ -17,7 +18,7 @@ const routes = [
     component: MySpace,
     children: [
       {
-        path: "/myspace/setting",
+        path: "setting",
         name: "Setting",
         component: Setting,
       },
@@ -27,6 +28,11 @@ const routes = [
     path: "/islands",
     name: "Islands",
     component: Islands,
+  },
+  {
+    path: "/createisland",
+    name: "CreateIsland",
+    component: CreateIsland,
   },
 ];
 
