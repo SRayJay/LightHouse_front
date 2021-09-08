@@ -1,10 +1,12 @@
 <script setup lang="ts">
 // import UserDrawer from "@/components/UserDrawer.vue"
 import Header from "@/components/Header.vue";
+import Footer from "@C/Footer.vue";
 import { defineComponent, ref } from "vue";
 defineComponent({
   // UserDrawer,
   Header,
+  Footer,
 });
 </script>
 
@@ -14,22 +16,24 @@ defineComponent({
     <!-- <p>LightHouse</p> -->
     <div class="part1 flex flex-row">
       <div class="flex flex-column title">
-        <a-image :preview="false" width="100%" src="src/assets/logo.png"></a-image>
+        <a-image :preview="false" width="100%" src="./src/assets/logo.png"></a-image>
         <div>To The Moon</div>
       </div>
     </div>
     <div class="part2">
-      <a-image :preview="false" src="src/assets/lighthouse.jpg"></a-image>
+      <a-image :preview="false" src="./src/assets/lighthouse.jpg"></a-image>
     </div>
     <!-- <a-button type="primary" @click="showLoginDlg">Login in</a-button> -->
     <!-- <user-drawer></user-drawer> -->
   </main>
+  <!-- <Footer></Footer> -->
 </template>
 
 <style lang="less" scoped>
 .main {
   background: #111317;
   opacity: 0.9;
+  // height: 2000px;
   .part1 {
     width: 59%;
     height: auto;

@@ -6,7 +6,7 @@
     <div class="searchBar">
       <a-input-search
         size="large"
-        v-model:value="value"
+        v-model:value="searchContent"
         placeholder="input search text"
       ></a-input-search>
     </div>
@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import IslandThumb from "@C/IslandThumb.vue";
 import Header from "@C/Header.vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import AddBtn from "@C/AddBtn.vue";
 import { useRouter } from "vue-router";
 
@@ -35,19 +35,19 @@ defineComponent({
 });
 
 const island1: object = {
-  pic: "src/assets/camus.jpg",
+  pic: "@/assets/camus.jpg",
   name: "加缪",
 };
 const island2: object = {
-  pic: "src/assets/William_Faulkner.jpg",
+  pic: "@/assets/William_Faulkner.jpg",
   name: "福克纳",
 };
 const island3: object = {
-  pic: "src/assets/Kafka.jpg",
+  pic: "@/assets/Kafka.jpg",
   name: "卡夫卡",
 };
 const island4: object = {
-  pic: "src/assets/William_Faulkner.jpg",
+  pic: "@/assets/William_Faulkner.jpg",
   name: "福克纳",
 };
 
@@ -57,6 +57,8 @@ function toCreateIsland(): void {
 
   router.push({ name: "CreateIsland" });
 }
+
+let searchContent = ref<string>("");
 </script>
 
 <style lang="less" scoped>

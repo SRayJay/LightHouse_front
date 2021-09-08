@@ -1,11 +1,7 @@
 <template>
   <div class="flex flex-row">
     <div class="leftBar">
-      <SettingOutlined
-        class="settingicon"
-        @click="toSetting"
-        :style="{ 'font-size': '2rem', color: '#f5f1e8' }"
-      />
+      <SettingOutlined class="settingicon" @click="toSetting" />
       <a-avatar :size="128" :src="avatarUrl">
         <template #icon><UserOutlined style="font-size: 32px" /></template>
       </a-avatar>
@@ -69,6 +65,8 @@ export default {
     position: absolute;
     left: 1%;
     top: 2%;
+    font-size: 2rem;
+    color: #f5f1e8;
   }
   .userName {
     color: #f5f1e8;

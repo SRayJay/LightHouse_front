@@ -25,11 +25,16 @@ import { useRouter } from "vue-router";
 import { SearchOutlined } from "@ant-design/icons-vue";
 import UserDrawer from "@C/UserDrawer.vue";
 
-const lightStyle: Object = {
+interface ColorStyle {
+  backColor: string;
+  fontColor: string;
+}
+
+const lightStyle: ColorStyle = {
   backColor: "#fff",
   fontColor: "#111317",
 };
-const darkStyle: Object = {
+const darkStyle: ColorStyle = {
   backColor: "#111317",
   fontColor: "#fff",
 };
@@ -48,7 +53,7 @@ export default defineComponent({
     let router = useRouter();
 
     // 处理动态样式
-    let theme = reactive({});
+    let theme: ColorStyle = reactive({ backColor: "", fontColor: "" });
     if (props.dark === true) {
       theme = darkStyle;
     } else {

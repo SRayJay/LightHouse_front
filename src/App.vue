@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import Footer from "@C/Footer.vue";
 </script>
 
 <template>
-  <router-view></router-view>
+  <div class="app-content">
+    <router-view></router-view>
+  </div>
+
+  <Footer class="footer"></Footer>
 </template>
 
 <style>
@@ -11,9 +16,19 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
   /* color: #2c3e50; */
   /* margin-top: 60px; */
+}
+.app-content {
+  flex: 1;
+}
+.footer {
+  flex: 0;
+  /* position: absolute; */
+  /* bottom: 0; */
 }
 * {
   margin: 0;
