@@ -6,17 +6,16 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name:'Setting',
-  setup(){
+  name: 'Setting',
+  setup() {
 
 
-    return{
+    return {
 
     }
   }
 })
 </script>
 
-<style scoped lang="less">
-
+<style scoped lang="scss">
 </style>

@@ -17,7 +17,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .content {
   width: 160px;
   height: 200px;

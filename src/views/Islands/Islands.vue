@@ -4,11 +4,7 @@
     <div class="title">Islands</div>
 
     <div class="searchBar">
-      <a-input-search
-        size="large"
-        v-model:value="searchContent"
-        placeholder="input search text"
-      ></a-input-search>
+      <a-input-search size="large" v-model:value="searchContent" placeholder="input search text"></a-input-search>
     </div>
 
     <div class="islandsContainer">
@@ -61,7 +57,7 @@ function toCreateIsland(): void {
 let searchContent = ref<string>("");
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .container {
   max-width: 1024px;
   margin-left: auto;
@@ -78,7 +74,7 @@ let searchContent = ref<string>("");
     padding: 4em;
     position: relative;
     height: 600px;
-    background: @back;
+    background: $back;
     border-radius: 20px;
     display: grid;
     grid-auto-rows: 1fr;

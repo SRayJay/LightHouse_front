@@ -29,7 +29,7 @@ defineComponent({
   <!-- <Footer></Footer> -->
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .main {
   background: #111317;
   opacity: 0.9;

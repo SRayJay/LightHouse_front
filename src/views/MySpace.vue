@@ -3,7 +3,9 @@
     <div class="leftBar">
       <SettingOutlined class="settingicon" @click="toSetting" />
       <a-avatar :size="128" :src="avatarUrl">
-        <template #icon><UserOutlined style="font-size: 32px" /></template>
+        <template #icon>
+          <UserOutlined style="font-size: 32px" />
+        </template>
       </a-avatar>
       <div v-if="userInfo.userName" class="flex flex-column ml15">
         <div class="userName fs-bigger mb15">{{ userInfo.userName }}</div>
@@ -55,7 +57,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .leftBar {
   padding-top: 3rem;
   width: 25%;

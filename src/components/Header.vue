@@ -86,7 +86,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .header_wrap {
   height: 74px;
   width: v-bind(width);

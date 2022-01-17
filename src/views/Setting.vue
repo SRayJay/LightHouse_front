@@ -16,7 +16,7 @@
             >
               <img class="avatar" v-if="imageUrl" :src="imageUrl" alt="avatar" />
               <div class="avatar" v-else>
-                <img class="defaultAvatar" src="@/assets/default_avatar.jpg" alt="" />
+                <img class="defaultAvatar" src="@/assets/default_avatar.jpg" alt />
               </div>
             </a-upload>
           </div>
@@ -35,7 +35,7 @@
         <div class="sexBar mb20 flex flex-row flex-vcenter">
           <div class="mtitle">性别</div>
           <div class="sex_radio">
-            <a-radio-group v-model:value="sex" :options="userSex"> </a-radio-group>
+            <a-radio-group v-model:value="sex" :options="userSex"></a-radio-group>
           </div>
         </div>
         <div class="selflabelBar mb20 flex flex-row flex-vcenter">
@@ -90,7 +90,7 @@ export default defineComponent({
     const signature: string = "";
     const userCity: string = "";
 
-    const checkName = () => {};
+    const checkName = () => { };
 
     // 性别
     const userSex = [
@@ -153,7 +153,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .container {
   margin: 2% 3%;
   background: #e6e6e6;

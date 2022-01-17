@@ -11,7 +11,9 @@
     <template #title>
       <div class="drawerTitle flex">
         <a-avatar :size="64">
-          <template #icon><UserOutlined style="font-size: 32px" /></template>
+          <template #icon>
+            <UserOutlined style="font-size: 32px" />
+          </template>
         </a-avatar>
         <div v-if="hasInfo" class="flex flex-column ml15">
           <div class="userName fs-bigger mb15">{{ userName }}</div>
@@ -223,7 +225,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .drawerTitle {
   .userName {
     // color: #3B4152;

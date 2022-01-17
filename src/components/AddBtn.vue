@@ -1,6 +1,8 @@
 <template>
   <a-button @click="ClickAddBtn" type="primary" shape="circle">
-    <template #icon><PlusOutlined /></template>
+    <template #icon>
+      <PlusOutlined />
+    </template>
   </a-button>
 </template>
 
@@ -25,5 +27,5 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 </style>

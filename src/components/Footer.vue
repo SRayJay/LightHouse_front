@@ -13,12 +13,13 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@import "../assets/styles/color.scss";
 .wrap {
-  background: @back_black;
+  background: $back_black;
   min-height: 60px;
   padding: 1em 1em;
   width: 100%;
-  color: @soft_white;
+  color: $soft_white;
 }
 </style>
