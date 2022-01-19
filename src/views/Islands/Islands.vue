@@ -74,7 +74,7 @@ let searchContent = ref<string>("");
     padding: 4em;
     position: relative;
     height: 600px;
-    background: $back;
+    background: #fff;
     border-radius: 20px;
     display: grid;
     grid-auto-rows: 1fr;

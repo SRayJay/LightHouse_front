@@ -2,7 +2,8 @@ import { createApp, h } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import 'ant-design-vue/dist/antd.css';
+import 'ant-design-vue/dist/antd.less';
+import './assets/styles/theme.less';
 import Antd from 'ant-design-vue';
 import { useStore } from 'vuex'
 

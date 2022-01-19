@@ -1,0 +1,34 @@
+@import 'ant-design-vue/dist/antd.less'; // 引入官方提供的 less 样式入口文件
+@import './common.less';
+@import 'theme.less';
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'PingFang SC', sans-serif;
+}
+body{
+  background-color:#f5f1e8;
+  font-size: calc(0.5em + 1vw);
+  @media  screen and (max-width:800px) {
+    font-size:0.875em;
+  }
+  @media screen and (max-width:1200px) {
+    font-size: 1em;
+  }
+}
+
+ul{
+  list-style: none;
+}
+input,button{
+  outline: none;
+}
+a{
+  text-decoration: none;
+  color: #000;
+}
+
+
+@primary-color: #111317;

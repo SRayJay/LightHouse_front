@@ -10,9 +10,9 @@ import Footer from "@C/Footer.vue";
   <Footer class="footer"></Footer>
 </template>
 
-<style lang="scss">
-@import "./assets/styles/index.scss";
-@import "./assets/styles/color.scss";
+<style lang="less">
+@import "./assets/styles/index.less";
+@import "./assets/styles/theme.less";
 #app {
   font-family: "PingFang SC", Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

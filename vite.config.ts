@@ -20,7 +20,7 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         javascriptEnabled: true,
-        additionalData: `@import "${path.resolve(__dirname, "src/assets/styles/color.less")}";`,
+        additionalData: "@import './src/assets/styles/index.less';"
       },
     },
   },

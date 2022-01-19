@@ -1,151 +1,174 @@
 <template>
-  <div class="header_wrap">
-    <nav>
-      <ul class="flex fs-big flex-row nav_ul">
-        <li @click="navTo(1)">首页</li>
-        <li>分类</li>
-        <li @click="navTo(3)">群岛</li>
-        <li>书籍</li>
-        <li>广场</li>
-        <div>
-          <SearchOutlined class="searchIcon" :style="{ color: '#111317', fontSize: '1.5rem' }" />
-          <input type="text" class="searchInput" placeholder="去发现" />
+    <div class="header">
+        <div class="content">
+            <ul class="nav_line">
+                <li class="nav">
+                    <a href="#">主页</a>
+                </li>
+                <li class="nav">
+                    <a href="#">主页</a>
+                </li>
+                <li class="nav">
+                    <a href="#">主页</a>
+                </li>
+                <li class="nav">
+                    <a href="#">主页</a>
+                </li>
+                <li class="nav">
+                    <a href="#">主页</a>
+                </li>
+                <li class="nav">
+                    <a href="#">主页</a>
+                </li>
+                <li class="nav">
+                    <a href="#">主页</a>
+                </li>
+                <li class="search-bar">
+                    <input ref="search_word" type="text" placeholder="搜索" @keyup.enter="search" />
+                    <div class="search-icon" @click="search">
+                        <img src="@/assets/icon/search.png" />
+                    </div>
+                </li>
+                <li class="person">
+                    <!-- <div v-if="isLogin"> -->
+                    <!-- <el-dropdown class="dropdown">
+              <div class="userInfoArea">
+                <el-avatar
+                  class="userAvatar"
+                  :src="userAvatar"
+                  fit="fill"
+                />
+                <div class="nametext"><span>{{ $store.state.user.userInfo.userName }}</span></div>
+              </div>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item><div @click="toMySpace">个人主页</div></el-dropdown-item>
+                  <el-dropdown-item> <div @click="toMoments">我的动态</div> </el-dropdown-item>
+                  <el-dropdown-item><div @click="toBookLists">我的书单</div></el-dropdown-item>
+                  <el-dropdown-item> <div @click="toReviews">我的书评</div> </el-dropdown-item>
+                  <el-dropdown-item>
+                    <div @click="toSetting">设置中心</div></el-dropdown-item>
+                  <el-dropdown-item divided><div @click="logout">退出登录</div></el-dropdown-item>
+                </el-dropdown-menu>
+              </template>  
+             
+                    </el-dropdown>-->
+                    <!-- </div> -->
+                    <div>
+                        <router-link to="/login">
+                            <!-- <a-button>
+                                <template #icon>
+                                    <UserOutlined />
+                                </template>登录/注册
+                            </a-button>-->
+                            <button class="loginbtn">
+                                <user-outlined />
+                                <span id="btnword">登录/注册</span>
+                            </button>
+                        </router-link>
+                    </div>
+                </li>
+            </ul>
         </div>
-      </ul>
-      <div class="drawerBox">
-        <UserDrawer></UserDrawer>
-      </div>
-    </nav>
-  </div>
+    </div>
 </template>
-
-<script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-import { SearchOutlined } from "@ant-design/icons-vue";
-import UserDrawer from "@C/UserDrawer.vue";
-
-interface ColorStyle {
-  backColor: string;
-  fontColor: string;
-}
-
-const lightStyle: ColorStyle = {
-  backColor: "#fff",
-  fontColor: "#111317",
-};
-const darkStyle: ColorStyle = {
-  backColor: "#111317",
-  fontColor: "#fff",
-};
+<script lang="ts" >
+import { defineComponent } from "vue";
+import { UserOutlined } from "@ant-design/icons-vue";
 export default defineComponent({
-  name: "Header",
-  components: {
-    UserDrawer,
-    SearchOutlined,
-  },
-  props: {
-    dark: Boolean,
-    width: String,
-  },
+    name: 'Header',
+    components: {
+        UserOutlined,
+    },
+    setup() {
+        const search = () => {
 
-  setup(props) {
-    let router = useRouter();
-
-    // 处理动态样式
-    let theme: ColorStyle = reactive({ backColor: "", fontColor: "" });
-    if (props.dark === true) {
-      theme = darkStyle;
-    } else {
-      theme = lightStyle;
-    }
-    let navwidth = ref("calc(41% - 83px)");
-    if (props.width === "75%") {
-      navwidth.value = "calc(100% - 83px)";
+        }
+        return {
+            search,
+        }
     }
 
-    // 导航跳转
-    function navTo(path: number): void {
-      console.log(path);
-      switch (path) {
-        case 1:
-          router.push("/");
-          break;
-        case 3:
-          router.push("/islands");
-          break;
-      }
-    }
-
-    return {
-      theme,
-      navwidth,
-      navTo,
-    };
-  },
-});
+})
 </script>
-
-<style lang="scss" scoped>
-.header_wrap {
-  height: 74px;
-  width: v-bind(width);
-  min-width: 1000px;
-  position: absolute;
-  z-index: 999;
-  top: 0;
-  .nav_ul {
-    width: v-bind(navwidth);
-    height: 100%;
-    position: absolute;
-    color: v-bind("theme.fontColor");
-    right: 83px;
-    padding: 24px 40px;
-    box-sizing: border-box;
-    border-right: 1px solid v-bind("theme.fontColor");
-    border-left: 1px solid v-bind("theme.fontColor");
-    border-bottom: 1px solid v-bind("theme.fontColor");
-    li {
-      margin-right: 1.5rem;
-      cursor: pointer;
+<style lang="less" scoped>
+.header {
+    height: 4.75em;
+    width: 100%;
+    background: #f2f2f2;
+    .content {
+        width: 1024px;
+        height: 100%;
+        margin: 0 auto;
+        .nav_line {
+            display: flex;
+            padding: 0.5em 0;
+            .nav {
+                line-height: 2.5em;
+                * + * {
+                    margin-left: 1.5rem;
+                }
+                a {
+                    display: block;
+                    color: #000;
+                    padding: 0.5em 1em;
+                }
+                a:hover {
+                    color: $light_blue;
+                }
+            }
+            .search-bar {
+                margin-left: 2em;
+                width: 14em;
+                display: flex;
+                align-items: center;
+                input {
+                    color: #444;
+                    border: 1px solid #797979;
+                    text-indent: 0.5em;
+                    padding: 0.125em;
+                    width: 181px;
+                    height: 2rem;
+                    border-top-left-radius: 0.5em;
+                    border-bottom-left-radius: 0.5em;
+                    border-color: rgba(121, 121, 121, 1);
+                }
+                .search-icon {
+                    width: 43px;
+                    height: 2rem;
+                    padding: 0.3em 0;
+                    border-top-right-radius: 8px;
+                    border-bottom-right-radius: 8px;
+                    background: rgba(122, 122, 122, 1);
+                    img {
+                        width: 20px;
+                        height: 20px;
+                        text-align: center;
+                    }
+                }
+            }
+            .person {
+                display: flex;
+                margin-top: auto;
+                margin-bottom: auto;
+                margin-left: auto;
+                .loginbtn {
+                    height: 2.5rem;
+                    padding: 0 0.6em;
+                    line-height: 2.5rem;
+                    border-radius: 25px;
+                    border: none;
+                    #btnword {
+                        font-size: 12px;
+                        padding-left: 5px;
+                    }
+                }
+                .loginbtn:hover {
+                    background: #fff;
+                    color: #444;
+                }
+            }
+        }
     }
-    div {
-      position: relative;
-      margin: 0 5px;
-      height: 25px;
-      line-height: 25px;
-      .searchIcon {
-        position: absolute;
-        left: 10px;
-        top: 5px;
-      }
-      .searchInput {
-        border-radius: 10px;
-        border: none;
-        width: auto;
-        // max-width: 200px;
-        font-size: 1rem;
-        color: v-bind("theme.backColor");
-        padding: 5px 0 5px 40px;
-      }
-    }
-  }
-  .drawerBox {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 84px;
-    height: 74px;
-    color: v-bind("theme.fontColor");
-    // background:#fff;
-    border-bottom: 1px solid v-bind("theme.fontColor");
-    padding-top: 21px;
-    .drawer {
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 21px;
-      margin-bottom: auto;
-    }
-  }
 }
 </style>
