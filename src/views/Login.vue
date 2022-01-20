@@ -1,6 +1,16 @@
 <template>
     <div class="login">
         <div class="content">
+            <div class="header">
+                <div class="bar">
+                    <router-link to="/">
+                        <div class="logo">
+                            <img class="logo_pic" src="@/assets/logo.png" />
+                        </div>
+                        <div class="logo_txt">CITYNORTH</div>
+                    </router-link>
+                </div>
+            </div>
             <img src="@/assets/background.jpg" class="bgpic" />
             <login-form class="form"></login-form>
         </div>
@@ -17,19 +27,15 @@ import LoginForm from '@C/LoginForm.vue'
 
     position: relative;
 }
-.content {
-    padding-bottom: 30px;
-}
 .bgpic {
-    height: 100%;
+    // height: 100%;
+    height: calc(100vh - 123px);
     width: 100%;
 }
 .form {
     position: absolute;
-    /* right: 200px; */
     right: 20%;
     transform: translate(50%, 0);
-    /* top: 183px; */
     top: 25%;
 }
 .header {
@@ -47,7 +53,6 @@ import LoginForm from '@C/LoginForm.vue'
     height: 55px;
     float: left;
     margin-top: 12px;
-    /* margin-left: 200px; */
 }
 .logo_pic {
     width: 55px;

@@ -2,27 +2,31 @@
     <div class="header">
         <div class="content">
             <ul class="nav_line">
+                <li class="logo">
+                    <img class="logo_pic" alt="Vue logo" src="@/assets/logo.png" />
+                </li>
+                <li class="logo_txt">LightHouse</li>
                 <li class="nav">
                     <a href="#">主页</a>
                 </li>
                 <li class="nav">
-                    <a href="#">主页</a>
+                    <a href="#">社区</a>
                 </li>
                 <li class="nav">
-                    <a href="#">主页</a>
+                    <a href="#">排行榜</a>
                 </li>
                 <li class="nav">
-                    <a href="#">主页</a>
+                    <a href="#">分类</a>
                 </li>
                 <li class="nav">
-                    <a href="#">主页</a>
+                    <a href="#">专栏</a>
                 </li>
-                <li class="nav">
+                <!-- <li class="nav">
                     <a href="#">主页</a>
-                </li>
-                <li class="nav">
+                </li>-->
+                <!-- <li class="nav">
                     <a href="#">主页</a>
-                </li>
+                </li>-->
                 <li class="search-bar">
                     <input ref="search_word" type="text" placeholder="搜索" @keyup.enter="search" />
                     <div class="search-icon" @click="search">
@@ -30,37 +34,40 @@
                     </div>
                 </li>
                 <li class="person">
-                    <!-- <div v-if="isLogin"> -->
-                    <!-- <el-dropdown class="dropdown">
-              <div class="userInfoArea">
-                <el-avatar
-                  class="userAvatar"
-                  :src="userAvatar"
-                  fit="fill"
-                />
-                <div class="nametext"><span>{{ $store.state.user.userInfo.userName }}</span></div>
-              </div>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item><div @click="toMySpace">个人主页</div></el-dropdown-item>
-                  <el-dropdown-item> <div @click="toMoments">我的动态</div> </el-dropdown-item>
-                  <el-dropdown-item><div @click="toBookLists">我的书单</div></el-dropdown-item>
-                  <el-dropdown-item> <div @click="toReviews">我的书评</div> </el-dropdown-item>
-                  <el-dropdown-item>
-                    <div @click="toSetting">设置中心</div></el-dropdown-item>
-                  <el-dropdown-item divided><div @click="logout">退出登录</div></el-dropdown-item>
-                </el-dropdown-menu>
-              </template>  
-             
-                    </el-dropdown>-->
-                    <!-- </div> -->
-                    <div>
+                    <div v-if="isLogin">
+                        <a-dropdown class="dropdown">
+                            <div class="userInfoArea">
+                                <a-avatar class="userAvatar" :src="userAvatar" fit="fill" />
+                                <div class="nametext">
+                                    <span>{{ userName }}</span>
+                                </div>
+                            </div>
+                            <template #overlay>
+                                <a-menu>
+                                    <a-menu-item>
+                                        <div @click="toMySpace">个人主页</div>
+                                    </a-menu-item>
+                                    <a-menu-item>
+                                        <div @click="toMoments">我的动态</div>
+                                    </a-menu-item>
+                                    <a-menu-item>
+                                        <div @click="toBookLists">我的书单</div>
+                                    </a-menu-item>
+                                    <a-menu-item>
+                                        <div @click="toReviews">我的书评</div>
+                                    </a-menu-item>
+                                    <a-menu-item>
+                                        <div @click="toSetting">设置中心</div>
+                                    </a-menu-item>
+                                    <a-menu-item divided>
+                                        <div @click="logout">退出登录</div>
+                                    </a-menu-item>
+                                </a-menu>
+                            </template>
+                        </a-dropdown>
+                    </div>
+                    <div v-else>
                         <router-link to="/login">
-                            <!-- <a-button>
-                                <template #icon>
-                                    <UserOutlined />
-                                </template>登录/注册
-                            </a-button>-->
                             <button class="loginbtn">
                                 <user-outlined />
                                 <span id="btnword">登录/注册</span>
@@ -73,19 +80,84 @@
     </div>
 </template>
 <script lang="ts" >
-import { defineComponent } from "vue";
 import { UserOutlined } from "@ant-design/icons-vue";
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { ref, reactive, defineComponent } from 'vue'
+import { message } from "ant-design-vue";
+
+
 export default defineComponent({
     name: 'Header',
     components: {
         UserOutlined,
     },
     setup() {
+        const router = useRouter()
+        const store = useStore()
         const search = () => {
+
+        }
+
+
+        // 获取用户登录状态和基本信息
+        let isLogin = ref<boolean>(false)
+        let userAvatar = ref<string>('')
+        let userName = ref<string>('')
+        const getUserInfo = () => {
+            if (store.state.user.userInfo) {
+                isLogin.value = true
+                console.log(JSON.parse(store.state.user.userInfo))
+                let userInfo = JSON.parse(store.state.user.userInfo)
+                userName.value = userInfo.userName
+                userAvatar.value = userInfo.userAvatar
+                if ((userInfo as any).userName) {
+
+                    // userName.value = (userInfo as any).userName;
+                    // signature.value = (userInfo as any).signature;
+                }
+            }
+        };
+
+        getUserInfo();
+        const toMySpace = () => {
+
+        }
+        const toMoments = () => {
+
+        }
+        const toBookLists = () => {
+
+        }
+        const toReviews = () => {
+
+        }
+        const toSetting = () => {
+
+        }
+        const logout = () => {
+            store.dispatch("user/logout").then(() => {
+                message.success('注销成功')
+                getUserInfo();
+                isLogin.value = false
+                userName.value = ''
+                userAvatar.value = ''
+            })
+
+
 
         }
         return {
             search,
+            isLogin,
+            toMySpace,
+            toMoments,
+            toBookLists,
+            toReviews,
+            toSetting,
+            logout,
+            userName,
+            userAvatar
         }
     }
 
@@ -102,7 +174,14 @@ export default defineComponent({
         margin: 0 auto;
         .nav_line {
             display: flex;
+            align-items: center;
             padding: 0.5em 0;
+            .logo {
+                .logo_pic {
+                    width: 55px;
+                    height: 55px;
+                }
+            }
             .nav {
                 line-height: 2.5em;
                 * + * {
@@ -114,7 +193,7 @@ export default defineComponent({
                     padding: 0.5em 1em;
                 }
                 a:hover {
-                    color: $light_blue;
+                    color: @light_blue;
                 }
             }
             .search-bar {
@@ -136,7 +215,7 @@ export default defineComponent({
                 .search-icon {
                     width: 43px;
                     height: 2rem;
-                    padding: 0.3em 0;
+                    padding: 0.2em 0;
                     border-top-right-radius: 8px;
                     border-bottom-right-radius: 8px;
                     background: rgba(122, 122, 122, 1);
@@ -152,12 +231,47 @@ export default defineComponent({
                 margin-top: auto;
                 margin-bottom: auto;
                 margin-left: auto;
+                .userInfoArea {
+                    cursor: pointer;
+                    padding-left: 5px;
+                    display: flex;
+                    position: relative;
+                    align-items: center;
+                    .userAvatar {
+                        width: 36px;
+                        height: 36px;
+                        margin-right: 1em;
+                    }
+                    .nametext {
+                        margin: auto;
+                        overflow: hidden;
+                        padding-right: 1em;
+                        font-size: 1rem;
+                        span {
+                            display: inline-block;
+                            margin: auto;
+                            white-space: nowrap;
+                            max-width: 98px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                    .nametext::after {
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 0.8em;
+                        border: 0.3em solid;
+                        border-color: black transparent transparent;
+                    }
+                }
                 .loginbtn {
                     height: 2.5rem;
                     padding: 0 0.6em;
                     line-height: 2.5rem;
                     border-radius: 25px;
                     border: none;
+                    font-size: 1rem;
                     #btnword {
                         font-size: 12px;
                         padding-left: 5px;
@@ -170,5 +284,13 @@ export default defineComponent({
             }
         }
     }
+}
+
+.logo_txt {
+    margin-left: 1em;
+    font-size: 1.2em;
+    line-height: 2.5em;
+
+    // margin-right: 1.5em;
 }
 </style>

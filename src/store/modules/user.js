@@ -1,25 +1,25 @@
-import Cookies from 'js-cookie'
 import api from '@/api/user.js'
+import storage from '../../utils/storage'
 const TokenKey = 'Token'
 const UserInfo = 'UserInfo'
 
 export function getToken() {
-    return Cookies.get(TokenKey)
+    return storage.getItem(TokenKey)
 }
 export function setToken(token) {
-    return Cookies.set(TokenKey, token)
+    return storage.setItem(TokenKey, token)
 }
 export function removeToken() {
-    return Cookies.remove(TokenKey)
+    return storage.clearItem(TokenKey)
 }
 export function getUserInfo() {
-    return Cookies.get(UserInfo)
+    return storage.getItem(UserInfo)
 }
 export function setUserInfo(user) {
-    return Cookies.set(UserInfo, user)
+    return storage.setItem(UserInfo, user)
 }
 export function removeUserInfo() {
-    return Cookies.remove(UserInfo)
+    return storage.clearItem(UserInfo)
 }
 
 const getDefaultState = () => {

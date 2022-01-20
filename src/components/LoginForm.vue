@@ -6,123 +6,127 @@
         <div class="title_right" :class="{ toRegist: !actLogin }" @click="toRegister">
             <span class="underline-c-out">用户注册</span>
         </div>
-        <a-form v-if="actLogin" :model="loginForm" :rules="login_rules" class="login-form">
-            <a-form-item name="username">
-                <a-input
-                    v-model:value="loginForm.username"
-                    type="text"
-                    placeholder="用户名"
+        <a-spin :spinning="loading">
+            <a-form
+                v-if="actLogin"
+                ref="loginFormRef"
+                :model="loginForm"
+                :rules="login_rules"
+                class="login-form"
+            >
+                <a-form-item name="userName">
+                    <a-input
+                        v-model:value="loginForm.userName"
+                        type="text"
+                        placeholder="用户名"
+                        size="large"
+                        tabindex="1"
+                        allowClear
+                    >
+                        <template #prefix>
+                            <user-outlined style="margin: 0 0.3em;" type="user" />
+                        </template>
+                    </a-input>
+                </a-form-item>
+                <a-form-item name="password">
+                    <a-input-password
+                        v-model:value="loginForm.password"
+                        tabindex="2"
+                        size="large"
+                        allowClear
+                        autocomplete="off"
+                        placeholder="密码"
+                        @keyup.enter="handleLogin"
+                    >
+                        <template #prefix>
+                            <lock-outlined style="margin: 0 0.3em;" />
+                        </template>
+                    </a-input-password>
+                </a-form-item>
+                <div class="flex mb20">
+                    <a-checkbox>记住我</a-checkbox>
+                    <a style="margin-left: auto;">忘记密码</a>
+                </div>
+                <a-button
+                    type="primary"
+                    style="width:100%;margin-bottom:30px"
                     size="large"
-                    tabindex="1"
-                    allowClear
-                >
-                    <template #prefix>
-                        <user-outlined style="margin: 0 0.3em;" type="user" />
-                    </template>
-                </a-input>
-            </a-form-item>
-            <a-form-item name="password">
-                <a-input-password
-                    ref="login_password"
-                    v-model:value="loginForm.password"
-                    tabindex="2"
-                    name="login_password"
-                    size="large"
-                    allowClear
-                    autocomplete="off"
-                    placeholder="密码"
-                    @keyup.enter="handleLogin"
-                >
-                    <template #prefix>
-                        <lock-outlined style="margin: 0 0.3em;" />
-                    </template>
-                </a-input-password>
-            </a-form-item>
-            <div class="flex mb20">
-                <a-checkbox>记住我</a-checkbox>
-                <a style="margin-left: auto;">忘记密码</a>
-            </div>
+                    :disabled="disabledLogin"
+                    @click.prevent="handleLogin"
+                >登录</a-button>
+            </a-form>
 
-            <!-- <div class="l_icon" @click="open">忘记密码</div> -->
-            <a-button
-                type="primary"
-                style="width:100%;margin-bottom:30px"
-                size="large"
-                @click.prevent="handleLogin"
-            >登录</a-button>
-        </a-form>
-        <a-form
-            v-else
-            ref="registerFormRef"
-            :model="registerForm"
-            :rules="register_rules"
-            class="login-form"
-        >
-            <a-form-item has-feedback name="register_username">
-                <a-input
-                    ref="register_username"
-                    v-model="registerForm.username"
-                    type="text"
-                    name="register_username"
-                    auto-complete="true"
-                    placeholder="用户名"
-                    tabindex="1"
-                    size="large"
-                >
-                    <template #prefix>
-                        <user-outlined style="margin: 0 0.3em;" />
-                    </template>
-                </a-input>
-            </a-form-item>
-            <a-form-item has-feedback name="register_password">
-                <a-input-password
-                    ref="register_password"
-                    v-model="registerForm.password"
-                    tabindex="2"
-                    name="register_password"
-                    auto-complete="off"
-                    placeholder="密码"
-                    size="large"
-                >
-                    <template #prefix>
-                        <lock-outlined style="margin: 0 0.3em;" />
-                    </template>
-                </a-input-password>
-            </a-form-item>
-            <a-form-item has-feedback name="register_checkpassword">
-                <a-input-password
-                    ref="register_checkpassword"
-                    v-model="registerForm.checkpassword"
-                    tabindex="2"
-                    placeholder="确认密码"
-                    size="large"
-                    auto-complete="off"
-                    @keyup.enter="handleRegister"
-                >
-                    <template #prefix>
-                        <lock-outlined style="margin: 0 0.3em;" />
-                    </template>
-                </a-input-password>
-            </a-form-item>
-            <a-button
-                type="primary"
-                style="width:100%;
+            <a-form
+                v-else
+                ref="registerFormRef"
+                :model="registerForm"
+                :rules="register_rules"
+                class="login-form"
+            >
+                <a-form-item name="userName">
+                    <a-input
+                        v-model:value="registerForm.userName"
+                        type="text"
+                        placeholder="用户名"
+                        tabindex="1"
+                        size="large"
+                        allowClear
+                    >
+                        <template #prefix>
+                            <user-outlined style="margin: 0 0.3em;" />
+                        </template>
+                    </a-input>
+                </a-form-item>
+                <a-form-item has-feedback name="password">
+                    <a-input-password
+                        v-model:value="registerForm.password"
+                        tabindex="2"
+                        auto-complete="off"
+                        placeholder="密码"
+                        size="large"
+                    >
+                        <template #prefix>
+                            <lock-outlined style="margin: 0 0.3em;" />
+                        </template>
+                    </a-input-password>
+                </a-form-item>
+                <a-form-item has-feedback name="checkpassword">
+                    <a-input-password
+                        v-model:value="registerForm.checkpassword"
+                        tabindex="3"
+                        placeholder="确认密码"
+                        size="large"
+                        auto-complete="off"
+                        @keyup.enter="handleRegister"
+                    >
+                        <template #prefix>
+                            <lock-outlined style="margin: 0 0.3em;" />
+                        </template>
+                    </a-input-password>
+                </a-form-item>
+                <a-button
+                    type="primary"
+                    style="width:100%;
         margin-bottom:30px"
-                size="large"
-                @click.prevent="handleRegister"
-            >注册</a-button>
-        </a-form>
+                    size="large"
+                    @click.prevent="handleRegister"
+                >注册</a-button>
+            </a-form>
+        </a-spin>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue"
+import { defineComponent, ref, reactive, computed } from "vue"
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue"
 import type { RuleObject } from 'ant-design-vue/es/form';
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { message } from "ant-design-vue";
 // import type { FormInstance } from 'ant-design-vue';
 
 interface FormState {
-    username: string;
+    userName: string;
     password: string;
     checkpassword?: string;
 }
@@ -136,6 +140,8 @@ export default defineComponent({
     setup() {
         const loginFormRef = ref();
         const registerFormRef = ref();
+        const store = useStore()
+        const router = useRouter()
 
         const pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]")
         let validateName = async (rule: RuleObject, value: string) => {
@@ -164,67 +170,78 @@ export default defineComponent({
         let validateCheckPwd = async (rule: RuleObject, value: string) => {
             if (!value) {
                 return Promise.reject('请确认密码')
-            } else if (value !== registerFormRef.value.register_password) {
+            } else if (value !== registerForm.password) {
                 return Promise.reject('两次密码不一致')
             } else {
                 return Promise.resolve()
             }
         }
         let loginForm = reactive<FormState>({
-            username: '',
+            userName: '',
             password: ''
         })
         let registerForm = reactive<FormState>({
-            username: '',
+            userName: '',
             password: '',
             checkpassword: ''
         })
         const login_rules = {
-            username: [{ required: true, validator: validateName, trigger: 'change' }],
+            userName: [{ required: true, validator: validateName, trigger: 'change' }],
             password: [{ required: true, validator: validatePwd, trigger: 'change' }]
         }
         const register_rules = {
-            register_username: [{ required: true, validator: validateName, trigger: 'change' }],
-            register_password: [{ required: true, validator: validatePwd, trigger: 'change' }],
-            register_checkpassword: [{ required: true, validator: validateCheckPwd, trigger: 'change' }]
+            userName: [{ required: true, validator: validateName, trigger: 'change' }],
+            password: [{ required: true, validator: validatePwd, trigger: 'change' }],
+            checkpassword: [{ required: true, validator: validateCheckPwd, trigger: 'change' }]
         }
-        const handleLogin = function () {
+        let disabledLogin = computed(() => {
+            return !(loginForm.userName && loginForm.password);
+        })
+        let disabledRegister = computed(() => {
+            return !(registerForm.userName && registerForm.password && registerForm.checkpassword);
+        })
+        const handleLogin = async () => {
             console.log(loginForm)
-            // loginFormRef.value.validate(valid => {
-            //     this.loading = true
-            //     if (valid) {
-            //         const fd = new FormData()
-            //         fd.append('userName', this.loginForm.login_username)
-            //         fd.append('userPassword', this.loginForm.login_password)
-            //         this.$store.dispatch('user/login', fd).then(() => {
-            //             this.loading = false
-            //             this.$router.push({ path: '/' })
-            //         }, (data) => {
-            //             this.$message.error({
-            //                 message: '用户名或密码错误'
-            //             })
-            //             console.log(data)
-            //             this.loading = false
-            //         }).catch(function (error) {
-            //             console.log(error)
-            //         })
-            //     } else {
-            //         this.loading = false
-            //         this.$message.error({
-            //             message: '用户名或密码格式不正确，请重新输入'
-            //         })
-            //         console.log('error login!!')
-            //         return false
-            //     }
-            // })
+            loading.value = true
+            //TODO  没有做错误处理
+
+            try {
+                const values = await loginFormRef.value.validateFields();
+                console.log('Success:', values);
+                store.dispatch("user/login", loginForm).then(() => {
+                    message.success('登录成功')
+                    loading.value = false
+                    router.push('/')
+                }, (err) => {
+                    console.log(err)
+                    loading.value = false
+                })
+            } catch (errorInfo) {
+                console.log('Failed:', errorInfo);
+                message.error('校验失败')
+                loading.value = false;
+            }
         }
-        const handleRegister = function () {
-            // this.$refs.registerForm.validate(valid => {
-            //     this.loading = true
-            //     if (valid) {
-            //         const fd = new FormData()
-            //         fd.append('userName', this.registerForm.register_username)
-            //         fd.append('userPassword', this.registerForm.register_password)
+        const handleRegister = async () => {
+            console.log(registerForm)
+            loading.value = true
+            //TODO 没有做错误处理
+            try {
+                const values = await registerFormRef.value.validateFields();
+                console.log('Success:', values);
+                store.dispatch("user/register", registerForm).then(() => {
+                    message.success('注册成功')
+                    loading.value = false
+                    router.push('/')
+                }, (err) => {
+                    console.log(err)
+                    loading.value = false
+                })
+            } catch (errorInfo) {
+                console.log('Failed:', errorInfo);
+                message.error('校验失败')
+                loading.value = false;
+            }
             //         this.$store.dispatch('user/register', fd).then(() => {
             //             this.loading = false
             //             this.$router.push({ path: '/' })
@@ -254,6 +271,7 @@ export default defineComponent({
         const toRegister = function () {
             actLogin.value = false
         }
+        let loading = ref<boolean>(false)
         return {
             handleLogin,
             handleRegister,
@@ -265,7 +283,10 @@ export default defineComponent({
             registerFormRef,
             actLogin,
             toLogin,
-            toRegister
+            toRegister,
+            disabledLogin,
+            disabledRegister,
+            loading
         }
     },
 
@@ -298,14 +319,6 @@ export default defineComponent({
         position: relative;
         margin-left: 40px;
     }
-    //     .l_icon {
-    //         color: rgba($color: #3379cc, $alpha: 0.7);
-    //         font-size: 14px;
-    //         float: right;
-    //         height: 14px;
-    //         cursor: pointer;
-    //         margin-bottom: 5px;
-    //     }
     .title_left {
         // margin: 0px auto 0px auto;
         margin-bottom: 40px;

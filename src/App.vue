@@ -21,6 +21,7 @@ import Footer from "@C/Footer.vue";
   display: flex;
   flex-flow: column;
   min-height: 100vh;
+  font-size: 16px;
   /* color: #2c3e50; */
   /* margin-top: 60px; */
 }

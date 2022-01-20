@@ -30,7 +30,7 @@ export default defineComponent({
   color: #7a7a7a;
 }
 .placeholder {
-  height: 20px;
+  height: 10px;
   width: 100%;
 }
 </style>
