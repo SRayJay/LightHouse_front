@@ -26,8 +26,10 @@ import Header from '@C/Header.vue';
 import HotBooks from '@C/HotBooks.vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, } from 'vue'
 import { Book } from '../types/global'
+import api from '../api/book'
+
 const router = useRouter()
 const store = useStore()
 
@@ -36,50 +38,17 @@ const search = () => {
     console.log(search_word.value.value)
 
 }
-const hotBooks: Array<Book> = [{
-    bookId: 1,
-    bookTitle: '金阁寺',
-    authorName: '三岛由纪夫'
-}, {
-    bookId: 2,
-    bookTitle: '罗生门',
-    authorName: '芥川龙之介'
-},
-{
-    bookId: 3,
-    bookTitle: '金阁寺',
-    authorName: '三岛由纪夫'
-},
-{
-    bookId: 4,
-    bookTitle: '金阁寺',
-    authorName: '三岛由纪夫'
-}, {
-    bookId: 5,
-    bookTitle: '金阁寺',
-    authorName: '三岛由纪夫'
-}, {
-    bookId: 6,
-    bookTitle: '金阁寺',
-    authorName: '三岛由纪夫'
-}, {
-    bookId: 7,
-    bookTitle: '金阁寺',
-    authorName: '三岛由纪夫'
-}, {
-    bookId: 8,
-    bookTitle: '金阁寺',
-    authorName: '三岛由纪夫'
-}, {
-    bookId: 9,
-    bookTitle: '金阁寺',
-    authorName: '三岛由纪夫'
-}, {
-    bookId: 10,
-    bookTitle: '金阁寺',
-    authorName: '三岛由纪夫'
-}
-]
+
+let loadHotBooks = ref<Boolean>(true)
+let hotBooks = reactive<Array<Book>>([])
+api.getHotBooks().then((res) => {
+    res.forEach(e => {
+        hotBooks.push(e)
+    });
+    loadHotBooks.value = false
+    console.log(hotBooks)
+})
+
 onMounted(() => {
 
 })

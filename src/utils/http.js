@@ -7,6 +7,10 @@ import axios from 'axios';
 import store from '@/store/index';
 // import { ElMessage } from 'element-plus';
 import Cookies from 'js-cookie'
+import { message } from 'ant-design-vue';
+
+
+const TOKEN_INVALID = '请重新登录'
 
 /** 
  * 提示函数 
@@ -84,28 +88,23 @@ instance.interceptors.request.use(
     },
     error => Promise.error(error))
 
-// // 响应拦截器
-// instance.interceptors.response.use(
-//     // 请求成功
-//     res => res.status === 200 ? Promise.resolve(res) : Promise.reject(res),
-//     // 请求失败
-//     error => {
-//         const { response } = error;
-//         if (response) {
-//             // 请求已发出，但是不在2xx的范围 
-//             errorHandle(response.status, response.data.message);
-//             return Promise.reject(response);
-//         } else {
-//             // 处理断网的情况
-//             // eg:请求超时或断网时，更新state的network状态
-//             // network状态在app.vue中控制着一个全局的断网提示组件的显示隐藏
-//             // 关于断网组件中的刷新重新获取数据，会在断网组件中说明
-//             if (!window.navigator.onLine) {
-//                 store.commit('changeNetwork', false);
-//             } else {
-//                 return Promise.reject(error);
-//             }
-//         }
-//     });
+// 响应拦截器
+instance.interceptors.response.use((res)=>{
+    const {code,msg,data} =res.data;
+    if(code===200){
+        return data;
+    }else if(code===40001){
+        message.error('接口错误',3000)
+        // setTimeout()
+    }else if(code===40002){
+        // 身份错误
+        message.error(TOKEN_INVALID,3000)
+        setTimeout({},1500)
+        return Promise.reject(TOKEN_INVALID)
+    }
+})
+   
+   
+    
 
 export default instance;

@@ -5,10 +5,12 @@
         <div class="flex wrap">
             <BookThumb
                 v-for="book in hotBooks"
-                :key="book.bookId"
-                :book-title="book.bookTitle"
-                :book-author="book.authorName"
-                :book-id="book.bookId"
+                :key="book._id"
+                :book-title="book.name"
+                :book-author="book.author.name"
+                :book-intro="book.intro"
+                :book-pic="book.cover"
+                :book-id="book._id"
                 class="bookthumb_list"
             ></BookThumb>
         </div>
@@ -16,7 +18,7 @@
 </template>
 <script lang="ts">
 import BookThumb from '@C/BookThumb.vue';
-import { ref, reactive, defineComponent, PropType } from 'vue'
+import { ref, reactive, defineComponent, PropType, } from 'vue'
 import { Book } from '../types/global'
 
 export default defineComponent({
@@ -32,7 +34,9 @@ export default defineComponent({
             }
         }
     },
-    setup() {
+
+    setup(prop) {
+        console.log('prp', prop.hotBooks)
 
     }
 })
