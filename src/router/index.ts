@@ -29,16 +29,21 @@ const routes = [
       },
     ],
   },
+  // {
+  //   path: "/islands",
+  //   name: "Islands",
+  //   component: Islands,
+  // },
+  // {
+  //   path: "/createisland",
+  //   name: "CreateIsland",
+  //   component: CreateIsland,
+  // },
   {
-    path: "/islands",
-    name: "Islands",
-    component: Islands,
-  },
-  {
-    path: "/createisland",
-    name: "CreateIsland",
-    component: CreateIsland,
-  },
+    path:"/book/:id",
+    name:'BookDetail',
+    component:()=>import('@V/BookDetail.vue')
+  }
 ];
 
 const router = createRouter({

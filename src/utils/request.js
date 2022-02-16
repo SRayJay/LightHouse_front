@@ -8,6 +8,7 @@ import store from '@/store/index';
 // import { ElMessage } from 'element-plus';
 import Cookies from 'js-cookie'
 import { message } from 'ant-design-vue';
+import cfg from '../config'
 
 
 const TOKEN_INVALID = '请重新登录'
@@ -64,15 +65,15 @@ const tip = msg => {
 // }
 
 // 创建axios实例
-var instance = axios.create({ timeout: 1000 * 12 });
+var service = axios.create({ timeout: 1000 * 12,baseURL:cfg.baseURL });
 // 设置post请求头
-// instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-instance.defaults.headers.post['Content-Type'] = 'application/json';
+// service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+service.defaults.headers.post['Content-Type'] = 'application/json';
 /** 
  * 请求拦截器 
  * 每次请求前，如果存在token则在请求头中携带token 
  */
-instance.interceptors.request.use(
+ service.interceptors.request.use(
     config => {
         // 登录流程控制中，根据本地是否存在token判断用户的登录情况        
         // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token        
@@ -89,7 +90,7 @@ instance.interceptors.request.use(
     error => Promise.error(error))
 
 // 响应拦截器
-instance.interceptors.response.use((res)=>{
+service.interceptors.response.use((res)=>{
     const {code,msg,data} =res.data;
     if(code===200){
         return data;
@@ -103,8 +104,24 @@ instance.interceptors.response.use((res)=>{
         return Promise.reject(TOKEN_INVALID)
     }
 })
-   
-   
+function request(options){
+    options.method = options.method || 'get';
+    if(options.method.toLowerCase()==='get'){
+        options.params = options.data
+    }
+    service.defaults.baseURL = cfg.BASEURL
+    return service(options)
+}
+['get','post','put','delete','patch'].forEach((item)=>{
+    request[item] = (url,data,params)=>{
+        return request({
+            url,
+            data,
+            method:item,
+            ...options
+        })
+    }
+})   
     
 
-export default instance;
+export default request;

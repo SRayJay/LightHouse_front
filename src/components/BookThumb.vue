@@ -1,5 +1,5 @@
 <template>
-    <div class="bookthumb">
+    <div class="bookthumb" @click="toBookDetail">
         <a-popover placement="right" :title="bookTitle">
             <template class="popcontent" #content>
                 <p>{{ bookIntro.slice(0, 100) + '...' }}</p>
@@ -15,7 +15,7 @@
 <script lang="ts">
 import { ref, reactive, defineComponent } from 'vue';
 import config from '../config/index.js';
-
+import { useRouter } from 'vue-router'
 export default defineComponent({
     name: 'BookThumb',
     props: {
@@ -40,11 +40,14 @@ export default defineComponent({
             default: ''
         }
     },
-    setup() {
-        console.log(111)
-
+    setup(props) {
+        const router = useRouter()
+        function toBookDetail() {
+            router.push({ name: 'BookDetail', params: { id: props.bookId } })
+        }
         return {
-            config
+            config,
+            toBookDetail
         }
     }
 })

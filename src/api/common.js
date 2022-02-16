@@ -1,10 +1,10 @@
-import axios from '@/utils/http';
+import request from '@/utils/request';
 
 const api = {
 
   // 上传头像
   uploadavatar(data){
-    return axios.post('/api/uploadavatar', data)
+    return request.post('/api/uploadavatar', data)
   },
 
 }

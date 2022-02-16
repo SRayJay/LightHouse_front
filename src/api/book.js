@@ -1,8 +1,15 @@
-import axios from '@/utils/http';
+import request from '@/utils/request';
 
 const api = {
     getHotBooks(){
-        return axios.get("/api/book/hotBooks")
+        return request.get("/api/book/hotBooks")
+    },
+    getBook(id){
+        return request({
+            url:'/book/getBook',
+            method:'get',
+            data:id
+        })
     }
 }
 export default api;
