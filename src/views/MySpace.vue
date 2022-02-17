@@ -1,86 +1,99 @@
 <template>
-  <div class="flex flex-row">
-    <div class="leftBar">
-      <SettingOutlined class="settingicon" @click="toSetting" />
-      <a-avatar :size="128" :src="avatarUrl">
-        <template #icon>
-          <UserOutlined style="font-size: 32px" />
-        </template>
-      </a-avatar>
-      <div v-if="userInfo.userName" class="flex flex-column ml15">
-        <div class="userName fs-bigger mb15">{{ userInfo.userName }}</div>
-        <div class="signature">{{ userInfo.signature }}</div>
-      </div>
+    <div>
+        <Header></Header>
+        <div class="wrap">
+            <div class="background_pic">
+                <img class="background_pic_image" />
+            </div>
+            <div class="userinfo_container flex flex-row">
+                <img class="user_avatar" :src="BASEURL + userInfo.avatar" />
+                <div class="flex flex-column ml30">
+                    <div class="username">{{ userInfo.userName }}</div>
+                    <div class="signature">{{ userInfo.signature }}</div>
+                    <div class="followAndFan">
+                        <span class="num">{{ userInfo.focus.length }}</span>关注
+                        <span class="num">{{ userInfo.followers.length }}</span>粉丝
+                    </div>
+                </div>
+            </div>
+            <div class="barContainer">
+                <div class="mtitle">我的动态</div>
+            </div>
+            <div class="barContainer">
+                <div class="mtitle">我的书摘</div>
+            </div>
+            <div class="barContainer">
+                <div class="mtitle">我的书评</div>
+            </div>
+            <div class="barContainer">
+                <div class="mtitle">我的书单</div>
+            </div>
+        </div>
     </div>
-    <div class="rightBar">
-      <Header width="75%" :dark="false"></Header>
-      <router-view v-slot="{ Component }" class="content">
-        <transition name="fade">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </div>
-  </div>
 </template>
+<script lang="ts" setup>
+import { ref, reactive, onMounted } from 'vue'
+import api from '@/api/user'
+import Header from '@C/Header.vue'
+import { useStore } from 'vuex'
+import { BASEURL } from '@/config'
+const store = useStore()
+const userInfo = JSON.parse(store.state.user.userInfo)
+console.log('userInfo', userInfo)
 
-<script lang="ts">
-import { ref, reactive, getCurrentInstance, computed } from "vue";
-import { useRouter } from "vue-router";
-import Header from "@/components/Header.vue";
-import { SettingOutlined } from "@ant-design/icons-vue";
-export default {
-  name: "MySpace",
-  components: {
-    SettingOutlined,
-    Header,
-  },
-  setup() {
-    const router = useRouter();
-    const global = getCurrentInstance().appContext.config.globalProperties;
-
-    let userInfo = reactive(JSON.parse(global.$store.state.user.userInfo)) || {};
-
-    const avatarUrl = computed(() => {
-      if (userInfo.avatar) return "http://120.53.125.13:5000" + userInfo.avatar;
-      else return "http://120.53.125.13:5000/img/default_avatar.jpg";
-    });
-    const toSetting = () => {
-      router.push("/myspace/setting");
-    };
-
-    return {
-      userInfo,
-      toSetting,
-      avatarUrl,
-    };
-  },
-};
 </script>
-
-<style lang="scss" scoped>
-.leftBar {
-  padding-top: 3rem;
-  width: 25%;
-  background: #111317;
-  height: 1000px;
-  .settingicon {
-    position: absolute;
-    left: 1%;
-    top: 2%;
-    font-size: 2rem;
-    color: #f5f1e8;
-  }
-  .userName {
-    color: #f5f1e8;
-  }
-  .signature {
-    color: #f5f1e8;
-  }
+<style lang="less" scoped>
+.wrap {
+    width: 1024px;
+    margin: 0 auto;
+    padding-bottom: 30px;
 }
-.rightBar {
-  width: 70%;
-  .content {
-    margin-top: 74px;
-  }
+.background_pic_image {
+    width: 1024px;
+    height: 465px;
+}
+.userinfo_container {
+    height: 240px;
+    margin-top: 40px;
+    .user_avatar {
+        width: 180px;
+        height: 180px;
+    }
+    .username {
+        font-size: 1.5rem;
+        text-align: left;
+    }
+    .signature {
+        font-size: 0.95rem;
+        text-align: left;
+        margin-top: 30px;
+    }
+    .followAndFan {
+        font-size: 0.95rem;
+        text-align: left;
+        margin-top: 70px;
+    }
+    .num {
+        color: #d81e06;
+        font-size: 18px;
+        margin-left: 5px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+}
+.barContainer {
+    margin-top: 40px;
+    width: 100%;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+.mtitle {
+    font-size: 18px;
+    position: relative;
+    text-align: left;
+    margin-left: 0px;
+    margin-top: 0px;
+    /* color: #03B615; */
+    color: #0a7101;
 }
 </style>

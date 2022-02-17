@@ -27,7 +27,7 @@ import HotBooks from '@C/HotBooks.vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { ref, reactive, onMounted, } from 'vue'
-import { Book } from '../types/global'
+import { Book } from '../types'
 import api from '../api/book'
 
 const router = useRouter()
@@ -36,7 +36,7 @@ const store = useStore()
 let search_word = ref(null)
 const search = () => {
     console.log(search_word.value.value)
-
+    router.push({ name: 'SearchResult', params: { key: search_word.value.value } })
 }
 
 let loadHotBooks = ref<Boolean>(true)

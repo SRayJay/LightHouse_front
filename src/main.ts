@@ -6,7 +6,7 @@ import 'ant-design-vue/dist/antd.less';
 import './assets/styles/theme.less';
 import Antd from 'ant-design-vue';
 import { useStore } from 'vuex'
-import {Book} from './types/global'
+import {Book} from './types'
 const app = createApp(App)
 
 // app.config.globalProperties.$message = message;

@@ -1,8 +1,12 @@
 import request from '@/utils/request';
 
 const api = {
-    getHotBooks(){
-        return request.get("/api/book/hotBooks")
+    getHotBooks(params){
+        return request({
+            url:'/book/hotBooks',
+            method:'get',
+            data:params
+        })
     },
     getBook(id){
         return request({

@@ -37,7 +37,11 @@
                     <div v-if="isLogin">
                         <a-dropdown class="dropdown">
                             <div class="userInfoArea">
-                                <a-avatar class="userAvatar" :src="userAvatar" fit="fill" />
+                                <a-avatar
+                                    class="userAvatar"
+                                    :src="BASEURL + userAvatar"
+                                    fit="fill"
+                                />
                                 <div class="nametext">
                                     <span>{{ userName }}</span>
                                 </div>
@@ -85,7 +89,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { ref, reactive, defineComponent } from 'vue'
 import { message } from "ant-design-vue";
-
+import { BASEURL } from '@/config'
 
 export default defineComponent({
     name: 'Header',
@@ -121,7 +125,7 @@ export default defineComponent({
 
         getUserInfo();
         const toMySpace = () => {
-
+            router.push('/myspace')
         }
         const toMoments = () => {
 
@@ -150,6 +154,7 @@ export default defineComponent({
         return {
             search,
             isLogin,
+            BASEURL,
             toMySpace,
             toMoments,
             toBookLists,

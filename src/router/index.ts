@@ -1,10 +1,9 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 
-const MySpace = () => import("@V/MySpace.vue");
 const Home = () => import("@V/Home.vue");
 const Setting = () => import("@V/Setting.vue");
-const Islands = () => import("@/views/Islands/Islands.vue");
-const CreateIsland = () => import("@V/Islands/CreateIsland.vue");
+// const Islands = () => import("@/views/Islands/Islands.vue");
+// const CreateIsland = () => import("@V/Islands/CreateIsland.vue");
 
 const routes = [
   {
@@ -20,7 +19,7 @@ const routes = [
   {
     path: "/myspace",
     name: "MySpace",
-    component: MySpace,
+    component: () =>import('@V/MySpace.vue'),
     children: [
       {
         path: "setting",
@@ -28,6 +27,11 @@ const routes = [
         component: Setting,
       },
     ],
+  },
+  {
+    path:'/search/:key',
+    name:"SearchResult",
+    component:()=>import('@V/SearchResult.vue'),
   },
   // {
   //   path: "/islands",
@@ -43,6 +47,10 @@ const routes = [
     path:"/book/:id",
     name:'BookDetail',
     component:()=>import('@V/BookDetail.vue')
+  },{
+    path:'/author/:id',
+    name:'AuthorDetail',
+    component:()=>import('@V/AuthorDetail.vue')
   }
 ];
 

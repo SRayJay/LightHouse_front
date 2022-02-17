@@ -5,7 +5,7 @@
             <div class="book_info">
                 <div class="booktitle">{{ bookData.name }}</div>
                 <div class="book_brief flex">
-                    <a-image :width="150" :src="cfg.BASEURL + bookData.cover"></a-image>
+                    <a-image :width="150" :src="BASEURL + bookData.cover"></a-image>
                     <div class="flex details">
                         <div
                             class="author"
@@ -68,9 +68,9 @@
 import Header from '@C/Header.vue';
 import { ref, reactive, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router'
-import { Book } from '../types/global'
+import { Book } from '../types'
 import api from '../api/book'
-import cfg from '../config'
+import { BASEURL } from '../config'
 
 const route = useRoute()
 let bookData = ref<Book>({

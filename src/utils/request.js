@@ -8,7 +8,7 @@ import store from '@/store/index';
 // import { ElMessage } from 'element-plus';
 import Cookies from 'js-cookie'
 import { message } from 'ant-design-vue';
-import cfg from '../config'
+import {BASEURL} from '../config'
 
 
 const TOKEN_INVALID = '请重新登录'
@@ -65,7 +65,7 @@ const tip = msg => {
 // }
 
 // 创建axios实例
-var service = axios.create({ timeout: 1000 * 12,baseURL:cfg.baseURL });
+var service = axios.create({ timeout: 1000 * 12,baseURL:BASEURL });
 // 设置post请求头
 // service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 service.defaults.headers.post['Content-Type'] = 'application/json';
@@ -96,6 +96,7 @@ service.interceptors.response.use((res)=>{
         return data;
     }else if(code===40001){
         message.error('接口错误',3000)
+        return Promise.reject('接口错误')
         // setTimeout()
     }else if(code===40002){
         // 身份错误
@@ -109,7 +110,7 @@ function request(options){
     if(options.method.toLowerCase()==='get'){
         options.params = options.data
     }
-    service.defaults.baseURL = cfg.BASEURL
+    service.defaults.baseURL = BASEURL
     return service(options)
 }
 ['get','post','put','delete','patch'].forEach((item)=>{

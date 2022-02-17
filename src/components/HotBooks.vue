@@ -19,7 +19,7 @@
 <script lang="ts">
 import BookThumb from '@C/BookThumb.vue';
 import { ref, reactive, defineComponent, PropType, } from 'vue'
-import { Book } from '../types/global'
+import { Book } from '../types'
 
 export default defineComponent({
     name: 'HotBooks',
