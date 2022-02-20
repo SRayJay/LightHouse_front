@@ -9,6 +9,14 @@ const api = {
   // 登录
   login(data){
     return request.post('/api/user/login',data)
+  },
+
+  checkReview(data){
+    return request({
+      url:'/editor/checkReview',
+      method:'post',
+      data:data
+    })
   }
 }
 

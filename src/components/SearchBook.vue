@@ -44,7 +44,7 @@ export default defineComponent({
 .content {
     height: 120px;
     margin-top: 20px;
-
+    cursor: pointer;
     .bookcover {
         width: 86px;
         height: 120px;

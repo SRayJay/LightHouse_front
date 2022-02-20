@@ -1,7 +1,7 @@
 export type Book = {
     _id:string,
     name:string,
-    author:{name:string,country:string,intro:string},
+    author:{name:string,country:string,intro:string,_id:string},
     publisher:string,
     producer:string,
     intro:string,

@@ -7,9 +7,13 @@
                 <div class="book_brief flex">
                     <a-image :width="150" :src="BASEURL + bookData.cover"></a-image>
                     <div class="flex details">
-                        <div
-                            class="author"
-                        >作者：{{ (bookData.author.country !== '中国' ? '[' + bookData.author.country + ']' : '') + bookData.author.name }}</div>
+                        <div class="author">
+                            作者：
+                            <a
+                                class="pointable_text_color"
+                                @click="toAuthorDetail"
+                            >{{ simplifyCountry(bookData.author.country) + bookData.author.name }}</a>
+                        </div>
                         <div class="publisher">出版社：{{ bookData.publisher }}</div>
                         <div class="producer" v-if="bookData.producer">出品方：{{ bookData.producer }}</div>
                         <div class="publish_time">出版年：{{ bookData.publishTime }}</div>
@@ -42,6 +46,24 @@
                     <div class="cutline"></div>
                     <div class="intro_content">{{ bookData.author.intro }}</div>
                 </div>
+                <div class="intro">
+                    <div class="flex">
+                        <div class="subtitle">书摘</div>
+                        <div class="write_btn mlauto" @click="toWriteExcerpts">
+                            <edit-outlined />&nbsp;写书摘
+                        </div>
+                    </div>
+                    <div class="cutline"></div>
+                </div>
+                <div class="intro">
+                    <div class="flex">
+                        <div class="subtitle">书评</div>
+                        <div class="write_btn mlauto" @click="toWriteReview">
+                            <edit-outlined />&nbsp;写书评
+                        </div>
+                    </div>
+                    <div class="cutline"></div>
+                </div>
             </div>
             <div class="flex flex-column">
                 <div class="book_rate">
@@ -67,19 +89,25 @@
 <script lang="ts" setup>
 import Header from '@C/Header.vue';
 import { ref, reactive, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router';
+import { useStore } from 'vuex';
+import { simplifyCountry } from '@/utils/utils';
 import { Book } from '../types'
-import api from '../api/book'
+import bookapi from '../api/book'
+import userapi from '../api/user'
 import { BASEURL } from '../config'
-
+import { EditOutlined } from '@ant-design/icons-vue'
 const route = useRoute()
+const router = useRouter()
+const store = useStore()
 let bookData = ref<Book>({
     _id: '',
     name: '',
     author: {
         name: '',
         country: '',
-        intro: ''
+        intro: '',
+        _id: ''
     },
     publisher: '',
     producer: '',
@@ -91,13 +119,28 @@ let bookData = ref<Book>({
     series: '',
     rate: 0
 })
-api.getBook(route.params.id).then((res) => {
+bookapi.getBook(route.params.id).then((res) => {
     console.log(res)
     bookData.value = res
     // bookData.name = res.name
     console.log(bookData)
 })
+const toAuthorDetail = () => {
+    router.push({ name: 'AuthorDetail', params: { id: bookData.value.author._id } })
+}
 
+const toWriteExcerpts = () => {
+
+}
+const toWriteReview = () => {
+    if (store.state.user.token) {
+        userapi.checkReview({ userid: store.state.user.userInfo._id, bookid: bookData.value._id }).then(res => {
+            console.log(res)
+        })
+    } else {
+        console.log(111)
+    }
+}
 
 </script>
 <style lang="less" scoped>
@@ -105,6 +148,7 @@ api.getBook(route.params.id).then((res) => {
     width: 1024px;
     margin: 40px auto 0;
     display: flex;
+    padding-bottom: 30px;
 }
 .book_info {
     width: 700px;
@@ -123,10 +167,10 @@ api.getBook(route.params.id).then((res) => {
         .details {
             margin-left: 2em;
             flex-direction: column;
-            // justify-content: ;
             text-align: left;
             font-size: 0.95em;
-            color: @deep_blue;
+            // color: @deep_blue;
+            color: @text_black;
             & > * + * {
                 margin-top: 3px;
             }
@@ -156,6 +200,19 @@ api.getBook(route.params.id).then((res) => {
     }
     .intro_content {
         text-indent: 2em;
+    }
+    .write_btn {
+        background: #fff;
+        margin-top: 2em;
+        cursor: pointer;
+        border-radius: 8px;
+        font-size: 14px;
+        width: 80px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        color: @deep_blue;
     }
 }
 .book_rate {

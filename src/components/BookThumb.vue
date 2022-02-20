@@ -5,16 +5,17 @@
                 <p>{{ bookIntro.slice(0, 100) + '...' }}</p>
             </template>
             <div class="book_card">
-                <a-image :preview="false" :src="config.BASEURL + bookPic" class="pic" />
+                <img v-if="shadeBook" class="overpic" :src="BASEURL + '/img/more.png'" />
+                <a-image v-else :preview="false" :src="BASEURL + bookPic" class="pic" />
                 <div class="bookname">{{ bookTitle }}</div>
-                <div class="author">{{ bookAuthor }}</div>
+                <div v-if="bookAuthor" class="author">{{ bookAuthor }}</div>
             </div>
         </a-popover>
     </div>
 </template>
 <script lang="ts">
 import { ref, reactive, defineComponent } from 'vue';
-import config from '../config/index.js';
+import { BASEURL } from '../config/index.js';
 import { useRouter } from 'vue-router'
 export default defineComponent({
     name: 'BookThumb',
@@ -38,7 +39,11 @@ export default defineComponent({
         'bookId': {
             type: String,
             default: ''
-        }
+        },
+        'shadeBook': {
+            type: Boolean,
+            default: false
+        },
     },
     setup(props) {
         const router = useRouter()
@@ -46,7 +51,7 @@ export default defineComponent({
             router.push({ name: 'BookDetail', params: { id: props.bookId } })
         }
         return {
-            config,
+            BASEURL,
             toBookDetail
         }
     }
@@ -93,6 +98,12 @@ export default defineComponent({
         padding-left: 8px;
         padding-right: 8px;
         /* text-indent: 0.5em; */
+    }
+    .overpic {
+        position: absolute;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%, -50%);
     }
 }
 </style>

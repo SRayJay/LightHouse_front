@@ -18,6 +18,7 @@ specifiers:
   vue-router: ^4.0.12
   vue-tsc: ^0.2.2
   vuex: ^4.0.2
+  wangeditor: ^4.7.11
 
 dependencies:
   '@ant-design/icons-vue': 6.0.1_vue@3.2.27
@@ -29,6 +30,7 @@ dependencies:
   vue: 3.2.27
   vue-router: 4.0.12_vue@3.2.27
   vuex: 4.0.2_vue@3.2.27
+  wangeditor: 4.7.11
 
 devDependencies:
   '@types/node': 16.7.11
@@ -259,6 +261,14 @@ packages:
     resolution: {integrity: sha512-i7jDUfrVBWc+7OKcBzEe5n7fbv3i2fWtxKzzCvOjnzSxMfWMigAhtfJ7qzZNGFNMsCCd67+uz553dYKWXPvCKw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dev: false
+
+  /@babel/runtime-corejs3/7.17.2:
+    resolution: {integrity: sha512-NcKtr2epxfIrNM4VOmPKO46TvDMCBhgi2CrSHaEarrz+Plk2K5r9QemmOFTGpZaoKnWoGH5MO+CzeRsih/Fcgg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      core-js-pure: 3.21.1
+      regenerator-runtime: 0.13.9
     dev: false
 
   /@babel/runtime/7.16.7:
@@ -976,6 +986,11 @@ packages:
     resolution: {integrity: sha512-GK6QUtisv4fNS+XcI7shX0Gx9ORg7QqIznyfho79JTnX1XhLiyZHfftvGiziqzRiEi/Bjhgpi+D2o7HxJFPnDQ==}
     dependencies:
       is-what: 3.14.1
+    dev: false
+
+  /core-js-pure/3.21.1:
+    resolution: {integrity: sha512-12VZfFIu+wyVbBebyHmRTuEE/tZrB4tJToWcwAMcsp3h4+sHR+fMJWbKpYiCRWlhFBq+KNyO8rIV9rTkeVmznQ==}
+    requiresBuild: true
     dev: false
 
   /core-js/3.20.3:
@@ -3271,6 +3286,14 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.0.0-beta.21.1
       vue: 3.2.27
+    dev: false
+
+  /wangeditor/4.7.11:
+    resolution: {integrity: sha512-z6xEHTSj4YgqvQkHWh9/V/Md7hjEKchXquwvtxvWhwlMS/wBFprCg7qgE4omzuSBeivkZZGTJP08pmdHzOwCUQ==}
+    dependencies:
+      '@babel/runtime': 7.16.7
+      '@babel/runtime-corejs3': 7.17.2
+      tslib: 2.3.1
     dev: false
 
   /warning/4.0.3:

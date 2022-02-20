@@ -24,25 +24,35 @@
             <div class="bookBar">
                 <div class="subtitle">主要作品</div>
                 <div class="cutline"></div>
-                <div></div>
+                <div class="flex">
+                    <BookThumb
+                        v-for="book in author.books"
+                        :key="book._id"
+                        :book-title="book.name"
+                        :book-pic="book.cover"
+                        :book-id="book._id"
+                    />
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
-import { ref, } from 'vue'
+import { ref, reactive } from 'vue'
 import Header from '@C/Header.vue'
 import { useRoute, useRouter } from 'vue-router'
 import api from '@/api/common';
 import { Author } from '@/types'
 import { BASEURL } from '@/config'
+import BookThumb from '@/components/BookThumb.vue';
 const route = useRoute()
 const router = useRouter()
-
+// let booklist = reactive([])
 let author = ref<Author>({ name: '', photo: '', intro: '', birthday: '', deathday: '', books: [], nobel: 0, country: '', _id: '' })
 api.getAuthorById(route.params.id).then((res) => {
-    console.log(res)
+
     author.value = res
+    console.log(author.value.books)
 })
 
 
