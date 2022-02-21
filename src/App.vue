@@ -26,6 +26,11 @@ import Footer from "@C/Footer.vue";
   /* color: #2c3e50; */
   /* margin-top: 60px; */
 }
+.basic-wrap {
+  padding-bottom: 30px;
+  width: 1024px;
+  margin: 40px auto 0;
+}
 .app-content {
   flex: 1;
 }

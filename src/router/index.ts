@@ -51,6 +51,13 @@ const routes = [
     path:'/author/:id',
     name:'AuthorDetail',
     component:()=>import('@V/AuthorDetail.vue')
+  },{
+    path:'/reviewedit',
+    name:'ReviewEdit',
+    component:()=>import('@V/Review/ReviewEditPage.vue'),
+    meta:{
+      requireAuth:true
+    }
   }
 ];
 

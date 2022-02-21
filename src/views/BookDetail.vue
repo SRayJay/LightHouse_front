@@ -97,6 +97,7 @@ import bookapi from '../api/book'
 import userapi from '../api/user'
 import { BASEURL } from '../config'
 import { EditOutlined } from '@ant-design/icons-vue'
+import { message } from 'ant-design-vue';
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
@@ -135,10 +136,14 @@ const toWriteExcerpts = () => {
 const toWriteReview = () => {
     if (store.state.user.token) {
         userapi.checkReview({ userid: store.state.user.userInfo._id, bookid: bookData.value._id }).then(res => {
-            console.log(res)
+            if (res.data) {
+                message.warning('您已发表过该书的书评')
+            } else {
+                router.push({ name: 'ReviewEdit', params: { book: JSON.stringify(bookData.value) } })
+            }
         })
     } else {
-        console.log(111)
+        message.warning('登录后才能发表书评')
     }
 }
 
