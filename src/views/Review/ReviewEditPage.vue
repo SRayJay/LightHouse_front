@@ -26,12 +26,12 @@
                 <div v-if="!nobook" class="next_bar">
                     <div class="text">给个评价吧</div>
                     <div class="rateBar">
-                        <a-rate class="rate" :value="2"></a-rate>
+                        <a-rate class="rate" v-model:value="giverate"></a-rate>
                     </div>
                     <div class="btnPublish">
                         <button class="publish" @click="checkAndShowDlg">发表</button>
                     </div>
-                    <a-modal v-model:visible="showPublishDlg" title="确认发表书评吗？" @ok="publish"></a-modal>
+                    <!-- <a-modal v-model:visible="showPublishDlg" title="确认发表书评吗？" @ok="publish"></a-modal> -->
                 </div>
                 <div class="title">
                     <input
@@ -58,25 +58,30 @@ import { BASEURL } from '@/config'
 import { useRoute, useRouter } from 'vue-router'
 import E from 'wangeditor'
 import { simplifyCountry } from '@/utils/utils'
-import api from '@/api/book';
-import { message } from 'ant-design-vue'
+import editorApi from '@/api/editor';
+import { message, Modal } from 'ant-design-vue'
+import { useStore } from 'vuex'
 let nobook = ref<Boolean>(true);
 let giverate = ref<Number>(0);
-let bookInfo = ref({ name: '', cover: '', author: { name: '', country: '' }, producer: '', publisher: '' })
+let bookInfo = ref({ _id: '', name: '', cover: '', author: { name: '', country: '' }, producer: '', publisher: '' })
 const route = useRoute()
+const store = useStore()
 let editor = ref(null);
 let edittext = ref(null);
 let toolbar = ref(null)
 if (route.params.book) {
     nobook.value = false
-    bookInfo = JSON.parse(route.params.book as string)
+    // console.log(JSON.parse(route.params.book as string))
+    bookInfo.value = JSON.parse(route.params.book as string)
+    console.log(bookInfo.value)
 } else {
     nobook.value = true
+    console.log('ff')
 }
 onMounted(() => {
     setEditor()
 })
-let showPublishDlg = ref<Boolean>(false)
+// let showPublishDlg = ref<Boolean>(false)
 let reviewTitle = ref<String>('')
 const checkAndShowDlg = () => {
     let content = formatContent(editor.txt.html())
@@ -90,7 +95,22 @@ const checkAndShowDlg = () => {
     } else if (content.length > 20000) {
         message.warning('书评字数不可超过20000')
     } else {
-        showPublishDlg.value = true
+        editorApi.checkReview({ userid: JSON.parse(store.state.user.userInfo)._id, bookid: bookInfo.value._id }).then(res => {
+            console.log(res)
+            if (res) {
+                message.warning('您已发表过该书的书评')
+                return;
+            } else {
+                Modal.confirm({
+                    title: '确认发表书评吗？',
+                    onOk() {
+                        publish()
+                        //TODO 跳转到书评页
+                    }
+                })
+            }
+        })
+
     }
 }
 function formatContent(text: string) {
@@ -99,7 +119,18 @@ function formatContent(text: string) {
     return text
 }
 const publish = () => {
-
+    let userid = store.state.user.userInfo._id;
+    console.log(userid)
+    const params = {
+        title: reviewTitle.value,
+        content: formatContent(editor.txt.html()),
+        writer: JSON.parse(store.state.user.userInfo)._id,
+        rate: giverate.value,
+        related_book: bookInfo.value._id,
+    }
+    editorApi.publishReview(params).then((res) => {
+        console.log(res)
+    })
 }
 function setEditor() {
     editor = new E(toolbar.value, edittext.value)

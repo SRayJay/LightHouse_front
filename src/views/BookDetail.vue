@@ -94,7 +94,7 @@ import { useStore } from 'vuex';
 import { simplifyCountry } from '@/utils/utils';
 import { Book } from '../types'
 import bookapi from '../api/book'
-import userapi from '../api/user'
+import editorApi from '../api/editor'
 import { BASEURL } from '../config'
 import { EditOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue';
@@ -135,8 +135,8 @@ const toWriteExcerpts = () => {
 }
 const toWriteReview = () => {
     if (store.state.user.token) {
-        userapi.checkReview({ userid: store.state.user.userInfo._id, bookid: bookData.value._id }).then(res => {
-            if (res.data) {
+        editorApi.checkReview({ userid: JSON.parse(store.state.user.userInfo)._id, bookid: bookData.value._id }).then(res => {
+            if (res) {
                 message.warning('您已发表过该书的书评')
             } else {
                 router.push({ name: 'ReviewEdit', params: { book: JSON.stringify(bookData.value) } })
