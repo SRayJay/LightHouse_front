@@ -14,7 +14,14 @@ const api = {
           method:'post',
           data:data
         })
-      }
+      },
+    getReview(id){
+      return request({
+        url:'/editor/getReview',
+        method:'get',
+        data:id
+      })
+    }
 }
 
 export default api;

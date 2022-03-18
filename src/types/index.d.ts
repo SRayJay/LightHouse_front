@@ -10,8 +10,8 @@ export type Book = {
     publishTime:string,
     translator:string,
     series:string,
-    rate:number
-
+    rate:number,
+    reviews:[{title:string,content:string}]
 }
 export type Author = {
     name:string,

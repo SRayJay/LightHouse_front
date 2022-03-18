@@ -63,6 +63,7 @@
                         </div>
                     </div>
                     <div class="cutline"></div>
+                    <div v-for="review in bookData.reviews.slice(0, 2)">{{ review.title }}</div>
                 </div>
             </div>
             <div class="flex flex-column">
@@ -118,12 +119,15 @@ let bookData = ref<Book>({
     ISBN: '',
     translator: '',
     series: '',
-    rate: 0
+    rate: 0,
+    reviews: [{ title: '', content: '' }]
 })
 bookapi.getBook(route.params.id).then((res) => {
     console.log(res)
     bookData.value = res
     // bookData.name = res.name
+
+
     console.log(bookData)
 })
 const toAuthorDetail = () => {

@@ -58,6 +58,10 @@ const routes = [
     meta:{
       requireAuth:true
     }
+  },{
+    path:'/review/:id',
+    name:'ReviewContent',
+    component:()=>import('@V/Review/ReviewContentPage.vue')
   }
 ];
 

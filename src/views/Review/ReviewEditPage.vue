@@ -61,6 +61,7 @@ import { simplifyCountry } from '@/utils/utils'
 import editorApi from '@/api/editor';
 import { message, Modal } from 'ant-design-vue'
 import { useStore } from 'vuex'
+import router from '@/router'
 let nobook = ref<Boolean>(true);
 let giverate = ref<Number>(0);
 let bookInfo = ref({ _id: '', name: '', cover: '', author: { name: '', country: '' }, producer: '', publisher: '' })
@@ -106,6 +107,11 @@ const checkAndShowDlg = () => {
                     onOk() {
                         publish()
                         //TODO 跳转到书评页
+                        message.success('发布成功!')
+                        setTimeout(() => {
+                            router.push({ name: 'ReviewContentPage', params: res._id })
+
+                        }, 3000)
                     }
                 })
             }
