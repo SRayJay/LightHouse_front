@@ -63,7 +63,14 @@
                         </div>
                     </div>
                     <div class="cutline"></div>
-                    <div v-for="review in bookData.reviews.slice(0, 2)">{{ review.title }}</div>
+                    <div
+                        v-for="review in bookData.reviews.slice(0, 2)"
+                        :key="review._id"
+                        class="review_item"
+                    >
+                        <div class="review_title">{{ review.title }}</div>
+                        <div class="review_content">{{ review.text }}</div>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-column">
@@ -120,7 +127,7 @@ let bookData = ref<Book>({
     translator: '',
     series: '',
     rate: 0,
-    reviews: [{ title: '', content: '' }]
+    reviews: [{ _id: '', text: '', title: '', content: '' }]
 })
 bookapi.getBook(route.params.id).then((res) => {
     console.log(res)
@@ -140,7 +147,8 @@ const toWriteExcerpts = () => {
 const toWriteReview = () => {
     if (store.state.user.token) {
         editorApi.checkReview({ userid: JSON.parse(store.state.user.userInfo)._id, bookid: bookData.value._id }).then(res => {
-            if (res) {
+
+            if (res._id) {
                 message.warning('您已发表过该书的书评')
             } else {
                 router.push({ name: 'ReviewEdit', params: { book: JSON.stringify(bookData.value) } })
@@ -243,6 +251,21 @@ const toWriteReview = () => {
         & > * + * {
             margin-top: 5px;
         }
+    }
+}
+
+.review_item {
+    margin: 1em 0;
+    cursor: pointer;
+    height: 100px;
+    width: 585px;
+    .review_title {
+        color: @soft_blue;
+        text-align: left;
+        margin-bottom: 0.5em;
+    }
+    .review_content {
+        //去掉rate
     }
 }
 .relatedBook {

@@ -23,24 +23,19 @@
                 </div>
             </div>
             <div>
-                <div v-if="!nobook" class="next_bar">
-                    <div class="text">给个评价吧</div>
-                    <div class="rateBar">
-                        <a-rate class="rate" v-model:value="giverate"></a-rate>
+                <div>
+                    <div class="title flex">
+                        <input
+                            type="text"
+                            class="title_input"
+                            placeholder="添加标题"
+                            maxlength="20"
+                            v-model="reviewTitle"
+                        />
+                        <div v-if="!nobook" class="btnPublish">
+                            <button class="publish" @click="checkAndShowDlg">发表</button>
+                        </div>
                     </div>
-                    <div class="btnPublish">
-                        <button class="publish" @click="checkAndShowDlg">发表</button>
-                    </div>
-                    <!-- <a-modal v-model:visible="showPublishDlg" title="确认发表书评吗？" @ok="publish"></a-modal> -->
-                </div>
-                <div class="title">
-                    <input
-                        type="text"
-                        class="title_input"
-                        placeholder="添加标题"
-                        maxlength="20"
-                        v-model="reviewTitle"
-                    />
                     <div class="cutline"></div>
                 </div>
                 <div class="editor">
@@ -63,7 +58,6 @@ import { message, Modal } from 'ant-design-vue'
 import { useStore } from 'vuex'
 import router from '@/router'
 let nobook = ref<Boolean>(true);
-let giverate = ref<Number>(0);
 let bookInfo = ref({ _id: '', name: '', cover: '', author: { name: '', country: '' }, producer: '', publisher: '' })
 const route = useRoute()
 const store = useStore()
@@ -77,20 +71,16 @@ if (route.params.book) {
     console.log(bookInfo.value)
 } else {
     nobook.value = true
-    console.log('ff')
 }
 onMounted(() => {
     setEditor()
 })
-// let showPublishDlg = ref<Boolean>(false)
 let reviewTitle = ref<String>('')
 const checkAndShowDlg = () => {
     let content = formatContent(editor.txt.html())
     console.log(content)
     if (reviewTitle.value.length === 0) {
         message.warning('请输入书评标题')
-    } else if (giverate.value === 0) {
-        message.warning('请给书籍打分')
     } else if (content.length < 200) {
         message.warning('书评字数不可少于200')
     } else if (content.length > 20000) {
@@ -98,20 +88,28 @@ const checkAndShowDlg = () => {
     } else {
         editorApi.checkReview({ userid: JSON.parse(store.state.user.userInfo)._id, bookid: bookInfo.value._id }).then(res => {
             console.log(res)
-            if (res) {
+            if (res._id) {
                 message.warning('您已发表过该书的书评')
                 return;
             } else {
                 Modal.confirm({
                     title: '确认发表书评吗？',
                     onOk() {
-                        publish()
-                        //TODO 跳转到书评页
-                        message.success('发布成功!')
-                        setTimeout(() => {
-                            router.push({ name: 'ReviewContentPage', params: res._id })
+                        const params = {
+                            title: reviewTitle.value,
+                            content: formatContent(editor.txt.html()),
+                            text: editor.txt.text(),
+                            writer: JSON.parse(store.state.user.userInfo)._id,
+                            related_book: bookInfo.value._id,
+                        }
+                        editorApi.publishReview(params).then((res) => {
+                            console.log(res._id)
+                            message.success('发布成功!')
+                            setTimeout(() => {
+                                router.push({ name: 'ReviewContent', params: { id: res._id } })
 
-                        }, 3000)
+                            }, 3000)
+                        })
                     }
                 })
             }
@@ -124,20 +122,7 @@ function formatContent(text: string) {
     text = text.replace(/&amp;/g, '&')
     return text
 }
-const publish = () => {
-    let userid = store.state.user.userInfo._id;
-    console.log(userid)
-    const params = {
-        title: reviewTitle.value,
-        content: formatContent(editor.txt.html()),
-        writer: JSON.parse(store.state.user.userInfo)._id,
-        rate: giverate.value,
-        related_book: bookInfo.value._id,
-    }
-    editorApi.publishReview(params).then((res) => {
-        console.log(res)
-    })
-}
+
 function setEditor() {
     editor = new E(toolbar.value, edittext.value)
     editor.config.placeholder = '写书评...'
@@ -216,38 +201,45 @@ function setEditor() {
         font-size: 0.875rem;
     }
 }
-.next_bar {
-    height: 30px;
-    margin-top: 30px;
-    line-height: 30px;
-    display: flex;
-    align-items: center;
-    .text {
+// .next_bar {
+//     height: 30px;
+//     margin-top: 30px;
+//     line-height: 30px;
+//     display: flex;
+//     align-items: center;
+
+//     .btnPublish {
+//         margin-left: auto;
+//         .publish {
+//             height: 30px;
+//             width: 83px;
+//             cursor: pointer;
+//             background: @soft_blue;
+//             color: #fff;
+//             border: none;
+//             border-radius: 5px;
+//             font-size: 0.875rem;
+//         }
+//     }
+// }
+.btnPublish {
+    margin-left: auto;
+    .publish {
+        height: 30px;
+        width: 83px;
+        cursor: pointer;
+        background: @soft_blue;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
         font-size: 0.875rem;
-        color: #555;
-    }
-    .rateBar {
-        margin-left: 30px;
-        line-height: 30px;
-    }
-    .btnPublish {
-        margin-left: auto;
-        .publish {
-            height: 30px;
-            width: 83px;
-            cursor: pointer;
-            background: @soft_blue;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 0.875rem;
-        }
     }
 }
 .title {
-    margin: 20px auto;
+    margin: 20px auto 20px 0;
     width: 750px;
     text-align: left;
+
     .title_input {
         height: 32px;
         line-height: 32px;

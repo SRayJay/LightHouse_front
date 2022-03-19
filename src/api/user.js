@@ -7,8 +7,12 @@ const api = {
     return request.post('/api/user/register', data)
   },
   // 登录
-  login(data){
-    return request.post('/api/user/login',data)
+  login(body){
+    return request({
+      url:'/user/login',
+      method:'post',
+      data:body
+    })
   },
 
   

@@ -61,14 +61,9 @@ const actions = {
     login({ commit }, loginform) {
         return new Promise((resolve, reject) => {
             api.login(loginform).then(res=>{
-                console.log(res)
-                if (res.data.code === -1) {
-                    reject(res.data.msg)
-                } else if (res.data.code === 200) {
-                    let userinfo = JSON.stringify(res.data.user)
-                    commit('SET_TOKEN', res.data.token)
-                    commit('SET_USERINFO', userinfo)
-                }
+                let userinfo = JSON.stringify(res.user)
+                commit('SET_TOKEN', res.token)
+                commit('SET_USERINFO', userinfo)
                 resolve()
             }).catch(err=>{
                 reject(err)
