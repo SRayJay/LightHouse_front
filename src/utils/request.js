@@ -95,12 +95,12 @@ service.interceptors.response.use((res)=>{
     if(code===200){
         return data;
     }else if(code===40001){
-        message.error('接口错误',3000)
+        message.error('接口错误',2)
         return Promise.reject('接口错误')
         // setTimeout()
     }else if(code===40002){
         // 身份错误
-        message.error(TOKEN_INVALID,3000)
+        message.error(TOKEN_INVALID,2)
         setTimeout({},1500)
         return Promise.reject(TOKEN_INVALID)
     }

@@ -21,6 +21,13 @@ const api = {
         method:'get',
         data:id
       })
+    },
+    publishComment(data){
+      return request({
+        url:'/editor/publishComment',
+        method:'post',
+        data:data
+      })
     }
 }
 

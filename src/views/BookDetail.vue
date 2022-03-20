@@ -68,8 +68,24 @@
                         :key="review._id"
                         class="review_item"
                     >
-                        <div class="review_title">{{ review.title }}</div>
-                        <div class="review_content">{{ review.text }}</div>
+                        <div
+                            class="review_title"
+                            @click="toReviewContent(review._id)"
+                        >{{ review.title }}</div>
+                        <div
+                            class="review_content"
+                            @click="toReviewContent(review._id)"
+                        >{{ review.text }}</div>
+                        <div class="likes">
+                            <div class="likes_icon">
+                                <img src="src/assets/icon/like.png" />
+                            </div>
+                            <div class="likes_num">{{ review.likes ? review.likes.length : 0 }}</div>
+                        </div>
+                    </div>
+                    <div class="review_more">
+                        <RightOutlined :style="{ fontSize: '14px', color: '#3379cc' }" />
+                        所有书评（{{ bookData.reviews.length }}篇）
                     </div>
                 </div>
             </div>
@@ -104,7 +120,7 @@ import { Book } from '../types'
 import bookapi from '../api/book'
 import editorApi from '../api/editor'
 import { BASEURL } from '../config'
-import { EditOutlined } from '@ant-design/icons-vue'
+import { EditOutlined, RightOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue';
 const route = useRoute()
 const router = useRouter()
@@ -127,7 +143,7 @@ let bookData = ref<Book>({
     translator: '',
     series: '',
     rate: 0,
-    reviews: [{ _id: '', text: '', title: '', content: '' }]
+    reviews: [{ _id: '', text: '', title: '', content: '', likes: [] }]
 })
 bookapi.getBook(route.params.id).then((res) => {
     console.log(res)
@@ -157,6 +173,9 @@ const toWriteReview = () => {
     } else {
         message.warning('登录后才能发表书评')
     }
+}
+const toReviewContent = (id) => {
+    router.push({ name: 'ReviewContent', params: { id: id } })
 }
 
 </script>
@@ -257,16 +276,45 @@ const toWriteReview = () => {
 .review_item {
     margin: 1em 0;
     cursor: pointer;
-    height: 100px;
+    height: 120px;
     width: 585px;
     .review_title {
         color: @soft_blue;
         text-align: left;
         margin-bottom: 0.5em;
+        font-size: 1rem;
     }
     .review_content {
         //去掉rate
+        font-size: 0.875rem;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: -o-ellipsis-lastline;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
     }
+    .likes {
+        display: flex;
+        align-items: center;
+        .likes_icon img {
+            width: 16px;
+            height: 16px;
+        }
+        .likes_num {
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+    }
+}
+.review_more {
+    font-size: 0.8rem;
+    color: @soft_blue;
+    width: 120px;
+    text-align: left;
+    cursor: pointer;
+    margin-top: 5px;
 }
 .relatedBook {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
