@@ -27,6 +27,8 @@
             </div>
             <div class="barContainer">
                 <div class="mtitle">我的书单</div>
+                <!-- btnmore -->
+                <BookListLine title="想读"></BookListLine>
             </div>
         </div>
     </div>
@@ -37,6 +39,7 @@ import api from '@/api/user'
 import Header from '@C/Header.vue'
 import { useStore } from 'vuex'
 import { BASEURL } from '@/config'
+import BookListLine from '@C/BookListLine.vue'
 const store = useStore()
 const userInfo = JSON.parse(store.state.user.userInfo)
 console.log('userInfo', userInfo)
