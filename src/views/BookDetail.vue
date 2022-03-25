@@ -27,13 +27,25 @@
                 </div>
                 <div class="btn_bar">
                     <a-tooltip placement="topLeft" title="加入想读书单">
-                        <div class="btn_bar_btn">想读</div>
+                        <div
+                            class="btn_bar_btn"
+                            :class="{ btn_bar_click: isWantRead === true, btn_bar_noclick: isWantRead === false }"
+                            @click="bookAct(1)"
+                        >想读</div>
                     </a-tooltip>
                     <a-tooltip placement="topLeft" title="加入在读书单">
-                        <div class="btn_bar_btn">在读</div>
+                        <div
+                            class="btn_bar_btn"
+                            :class="{ btn_bar_click: isReading === true, btn_bar_noclick: isReading === false }"
+                            @click="bookAct(2)"
+                        >在读</div>
                     </a-tooltip>
                     <a-tooltip placement="topLeft" title="加入已读书单">
-                        <div class="btn_bar_btn">已读</div>
+                        <div
+                            class="btn_bar_btn"
+                            :class="{ btn_bar_click: isHaveRead === true, btn_bar_noclick: isHaveRead === false }"
+                            @click="bookAct(3)"
+                        >已读</div>
                     </a-tooltip>
                 </div>
                 <div class="intro">
@@ -97,9 +109,9 @@
                         <div class="rate_num">{{ bookData.rate }}</div>
                     </div>
                     <div class="flex flex-column readercnt">
-                        <div>100人想读</div>
-                        <div>1000人在读</div>
-                        <div>1000人在读</div>
+                        <div>{{ bookData.wantRead.length }}人想读</div>
+                        <div>{{ bookData.reading.length }}人在读</div>
+                        <div>{{ bookData.haveRead.length }}人已读</div>
                     </div>
                 </div>
                 <div class="relatedBook">
@@ -120,7 +132,7 @@ import { Book } from '../types'
 import bookapi from '../api/book'
 import editorApi from '../api/editor'
 import { BASEURL } from '../config'
-import { EditOutlined, RightOutlined } from '@ant-design/icons-vue'
+import { EditOutlined, RightOutlined, StopTwoTone } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue';
 const route = useRoute()
 const router = useRouter()
@@ -143,16 +155,30 @@ let bookData = ref<Book>({
     translator: '',
     series: '',
     rate: 0,
-    reviews: [{ _id: '', text: '', title: '', content: '', likes: [] }]
+    reviews: [{ _id: '', text: '', title: '', content: '', likes: [] }],
+    wantRead: [],
+    reading: [],
+    haveRead: []
 })
-bookapi.getBook(route.params.id).then((res) => {
-    console.log(res)
-    bookData.value = res
-    // bookData.name = res.name
 
+let isWantRead = ref<boolean>(false)
+let isReading = ref<boolean>(false)
+let isHaveRead = ref<boolean>(false)
 
-    console.log(bookData)
-})
+const getBookData = () => {
+    bookapi.getBook(route.params.id).then((res) => {
+        console.log(res)
+        bookData.value = res.book
+        if (res.result) {
+            isWantRead.value = res.result.isWantRead;
+            isReading.value = res.result.isReading;
+            isHaveRead.value = res.result.isHaveRead;
+        }
+        // console.log(actState)
+        console.log(bookData)
+    })
+}
+getBookData()
 const toAuthorDetail = () => {
     router.push({ name: 'AuthorDetail', params: { id: bookData.value.author._id } })
 }
@@ -178,6 +204,17 @@ const toReviewContent = (id) => {
     router.push({ name: 'ReviewContent', params: { id: id } })
 }
 
+const bookAct = (type) => {
+    if (!store.state.user.token) message.error('当前未登录或登录状态过期，请重新登录', 1.5)
+    let param = {
+        type,
+        bookid: bookData.value._id
+    }
+    bookapi.bookListAct(param).then(res => {
+        console.log(res)
+        getBookData()
+    })
+}
 </script>
 <style lang="less" scoped>
 .wrap {
@@ -226,6 +263,12 @@ const toReviewContent = (id) => {
             text-align: center;
             margin-right: 10px;
             border-radius: 5px;
+            // background: rgba(85, 85, 85, 1);
+        }
+        .btn_bar_click {
+            background: #03b615;
+        }
+        .btn_bar_noclick {
             background: rgba(85, 85, 85, 1);
         }
     }

@@ -19,4 +19,22 @@ function simplifyCountry(country:string){
     return simples[n];
 }
 
-export { simplifyCountry}
+// 图片上传预览
+// function getBase64(file: File) {
+//     return new Promise((resolve, reject) => {
+//       const reader = new FileReader();
+//       reader.readAsDataURL(file);
+//       reader.onload = () => resolve(reader.result);
+//       reader.onerror = error => reject(error);
+//     });
+//   }
+  function getBase64(img: Blob, callback: (base64Url: string) => void) {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result as string));
+    reader.readAsDataURL(img);
+}
+
+export { 
+    simplifyCountry,
+    getBase64
+}

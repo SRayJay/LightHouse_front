@@ -62,6 +62,10 @@ const routes = [
     path:'/review/:id',
     name:'ReviewContent',
     component:()=>import('@V/Review/ReviewContentPage.vue')
+  },{
+    path:'/community',
+    name:'Community',
+    component:()=>import('@V/Community.vue')
   }
 ];
 

@@ -11,7 +11,10 @@ export type Book = {
     translator:string,
     series:string,
     rate:number,
-    reviews:[{_id:string,text:string,title:string,content:string,likes:Array<string>}]
+    reviews:[{_id:string,text:string,title:string,content:string,likes:Array<string>}],
+    wantRead:[],
+    reading:[],
+    haveRead:[]
 }
 export type Author = {
     name:string,
@@ -44,4 +47,13 @@ export type Review = {
     likes:Array<string>,
     comments:Array<string>,
     writer:{_id:string,userName:string,avatar:string,signature:string},
+}
+export type Moment = {
+    _id:string,
+    content:string,
+    creator:string,
+    create_time:string,
+    replys:Array<string>,
+    likes:Array<string>,
+    pics:Array<string>
 }

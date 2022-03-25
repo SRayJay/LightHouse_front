@@ -7,26 +7,20 @@
                 </li>
                 <li class="logo_txt">LightHouse</li>
                 <li class="nav">
-                    <a href="#">主页</a>
+                    <div @click="router.push('/')">主页</div>
                 </li>
                 <li class="nav">
-                    <a href="#">社区</a>
+                    <div @click="router.push('/community')">社区</div>
                 </li>
                 <li class="nav">
-                    <a href="#">排行榜</a>
+                    <div>排行榜</div>
                 </li>
                 <li class="nav">
-                    <a href="#">分类</a>
+                    <div>分类</div>
                 </li>
                 <li class="nav">
-                    <a href="#">专栏</a>
+                    <div>专栏</div>
                 </li>
-                <!-- <li class="nav">
-                    <a href="#">主页</a>
-                </li>-->
-                <!-- <li class="nav">
-                    <a href="#">主页</a>
-                </li>-->
                 <li class="search-bar">
                     <input ref="search_word" type="text" placeholder="搜索" @keyup.enter="search" />
                     <div class="search-icon" @click="search">
@@ -162,7 +156,8 @@ export default defineComponent({
             toSetting,
             logout,
             userName,
-            userAvatar
+            userAvatar,
+            router,
         }
     }
 
@@ -192,12 +187,12 @@ export default defineComponent({
                 * + * {
                     margin-left: 1.5rem;
                 }
-                a {
-                    display: block;
+                div {
                     color: #000;
                     padding: 0.5em 1em;
+                    cursor: pointer;
                 }
-                a:hover {
+                div:hover {
                     color: @light_blue;
                 }
             }

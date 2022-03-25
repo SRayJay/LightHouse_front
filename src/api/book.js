@@ -14,6 +14,14 @@ const api = {
             method:'get',
             data:id
         })
+    },
+
+    bookListAct(param){
+        return request({
+            url:'/book/bookListAct',
+            method:'post',
+            data:param
+        })
     }
 }
 export default api;

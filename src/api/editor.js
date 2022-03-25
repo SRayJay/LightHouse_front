@@ -28,6 +28,13 @@ const api = {
         method:'post',
         data:data
       })
+    },
+    publishMoment(data){
+      return request({
+        url:'/editor/publishMoment',
+        method:'post',
+        data:data
+      })
     }
 }
 
