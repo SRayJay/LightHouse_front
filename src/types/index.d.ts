@@ -55,5 +55,6 @@ export type Moment = {
     create_time:string,
     replys:Array<string>,
     likes:Array<string>,
-    pics:Array<string>
+    pics:Array<string>,
+    isLike?:boolean
 }

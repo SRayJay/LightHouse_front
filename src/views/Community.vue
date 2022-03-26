@@ -7,8 +7,11 @@
                     <a-tab-pane key="1" style="min-height: 800px;" tab="动态">
                         <!--TODO：后续做适量加载，而不是一次性全加载-->
                         <div v-for="moment in momentList" :key="moment._id">
-                            <CommunityMoment :moment="moment" class="mb20" />
-                            <!-- <a-divider></a-divider> -->
+                            <CommunityMoment
+                                @refresh-moment="refreshMoment"
+                                :moment="moment"
+                                class="mb20"
+                            />
                         </div>
                     </a-tab-pane>
                     <a-tab-pane key="2" style="min-height: 800px;" tab="关注">
@@ -86,7 +89,7 @@
 </template>
 <script lang="ts" setup>
 import Header from '@C/Header.vue'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -145,7 +148,7 @@ const handleChange = (info) => {
             // fileList.value.push({ url: info.file.response.data })
             // console.log(fileList.value)
             console.log(fileList.value[0].response.url)
-            picList.value.push(fileList.value[0].response.url)
+            picList.value.push(info.file.response.url)
         });
     }
     if (info.file.status === "error") {
@@ -169,28 +172,43 @@ let showMomentEdit = ref<Boolean>(false)
 let momentContent = ref<string>('')
 let handleloading = ref<boolean>(false)
 
+let momentList = reactive<Moment[]>([])
 
+const getMoments = () => {
+    momentList.length = 0
+    socialApi.getMoments().then(res => {
+        res = res.reverse()
+        res.forEach(i => {
+            momentList.push(i)
+        });
+        console.log(momentList)
+    })
+}
 const handlePublish = () => {
     // 发布动态
     let content = momentContent.value;
-    let files = picList.value;
+    let pics = picList.value;
     editorApi.publishMoment({
         content,
-        files
+        pics
     }).then(res => {
         console.log(res)
         showMomentEdit.value = false;
         message.success('发布成功', 1.5)
+        picList.value = []
+        getMoments()
     })
 }
-const momentList = ref<Moment[]>([{ _id: '', content: '', creator: '', create_time: '', replys: [], likes: [], pics: [] }])
-const getMoments = () => {
-    socialApi.getMoments().then(res => {
-        momentList.value = res
-        console.log(momentList.value)
-    })
-}
+
 getMoments()
+
+
+const refreshMoment = (id) => {
+    socialApi.getMomentById(id).then(res => {
+        momentList[momentList.findIndex((i) => i._id === id)] = res
+        console.log(momentList)
+    })
+}
 const toMoments = () => {
 
 }

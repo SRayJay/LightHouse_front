@@ -9,11 +9,15 @@
         </div>
 
         <div class="content">{{ moment.content }}</div>
+        <div v-if="moment.pics.length > 0" class="momentPics">
+            <img v-for="(pic, index) in moment.pics" class="momentPic" :key="index" :src="pic" />
+        </div>
         <div class="greyText mt30" style="text-align:left;margin-left:80px">{{ moment.create_time }}</div>
         <div class="actionBar flex">
             <div class="act" @click="like">
                 <div class="actContainer">
-                    <like-outlined style="font-size: large;" />
+                    <like-outlined v-if="!moment.isLike" style="font-size: large;" />
+                    <like-two-tone v-else style="font-size: large;" />
                     <span class="like_num ml5">{{ moment.likes.length }}</span>
                 </div>
             </div>
@@ -40,7 +44,8 @@
 import { defineComponent } from "vue";
 import { BASEURL } from '@/config/index'
 import { useRouter } from 'vue-router';
-import { LikeOutlined, MessageOutlined, ShareAltOutlined, AlertOutlined } from '@ant-design/icons-vue'
+import socialApi from '@/api/social'
+import { LikeOutlined, MessageOutlined, ShareAltOutlined, AlertOutlined, LikeTwoTone } from '@ant-design/icons-vue'
 
 export default defineComponent({
     name: 'CommunityMoment',
@@ -48,22 +53,29 @@ export default defineComponent({
         LikeOutlined,
         MessageOutlined,
         ShareAltOutlined,
-        AlertOutlined
+        AlertOutlined,
+        LikeTwoTone
     },
+    emits: [
+        'refreshMoment'
+    ],
     props: {
         moment: {
             type: Object,
             default: () => { }
-        }
+        },
     },
-    setup() {
+    setup(props, ctx) {
         const router = useRouter()
 
         const toUserSpace = () => {
 
         }
         const like = () => {
-
+            socialApi.like({ type: 1, id: props.moment._id }).then(res => {
+                console.log(res)
+                ctx.emit('refreshMoment', props.moment._id)
+            })
         }
         const showCommentBar = () => {
 
@@ -100,6 +112,18 @@ export default defineComponent({
         margin-left: 80px;
         margin-top: 10px;
         // font-size: 1rem;
+    }
+    .momentPics {
+        text-align: left;
+        margin-top: 10px;
+        margin-left: 80px;
+        .momentPic {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
     }
     .actionBar {
         height: 40px;

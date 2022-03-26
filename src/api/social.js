@@ -7,6 +7,20 @@ const api = {
             method:'get',
             data:param
         })
+    },
+    getMomentById(param){
+        return request({
+            url:'/social/getMomentById',
+            method:'get',
+            data:param
+        })
+    },
+    like(param){
+        return request({
+            url:'/social/like',
+            method:'post',
+            data:param
+        })
     }
 }
 
