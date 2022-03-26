@@ -14,6 +14,13 @@ const api = {
       data:body
     })
   },
+  saveInfo(data){
+    return request({
+      url:'/user/saveInfo',
+      method:'post',
+      data:data
+    })
+  }
 
   
 }

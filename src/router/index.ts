@@ -1,15 +1,11 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 
-const Home = () => import("@V/Home.vue");
-const Setting = () => import("@V/Setting.vue");
-// const Islands = () => import("@/views/Islands/Islands.vue");
-// const CreateIsland = () => import("@V/Islands/CreateIsland.vue");
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: () => import("@V/Home.vue"),
   },
   {
     path: '/login',
@@ -20,13 +16,11 @@ const routes = [
     path: "/myspace",
     name: "MySpace",
     component: () =>import('@V/MySpace.vue'),
-    children: [
-      {
-        path: "setting",
-        name: "Setting",
-        component: Setting,
-      },
-    ],
+  },
+  {
+    path:"/setting",
+    name:'Setting',
+    component:() =>import('@V/Setting.vue')
   },
   {
     path:'/search/:key',

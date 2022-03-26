@@ -88,6 +88,16 @@ const actions = {
             })
         })
     },
+    saveInfo({commit},data){
+        return new Promise((resolve,reject)=>{
+            api.saveInfo(data).then(res => {
+                commit('SET_USERINFO',JSON.stringify(res))
+                resolve()
+              }).catch(error=>{
+                  reject(error)
+              })
+        })
+    },
     logout({ commit, state }) {
       removeToken()
       commit('REMOVE_USERINFO')

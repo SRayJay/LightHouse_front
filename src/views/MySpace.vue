@@ -3,7 +3,7 @@
         <Header></Header>
         <div class="wrap">
             <div class="background_pic">
-                <img class="background_pic_image" />
+                <img class="background_pic_image" :src="BASEURL + userInfo.background" />
             </div>
             <div class="userinfo_container flex flex-row">
                 <img class="user_avatar" :src="BASEURL + userInfo.avatar" />

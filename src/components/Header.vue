@@ -55,7 +55,7 @@
                                         <div @click="toReviews">我的书评</div>
                                     </a-menu-item>
                                     <a-menu-item>
-                                        <div @click="toSetting">设置中心</div>
+                                        <div @click="router.push('/setting')">设置中心</div>
                                     </a-menu-item>
                                     <a-menu-item divided>
                                         <div @click="logout">退出登录</div>
@@ -108,7 +108,7 @@ export default defineComponent({
                 console.log(JSON.parse(store.state.user.userInfo))
                 let userInfo = JSON.parse(store.state.user.userInfo)
                 userName.value = userInfo.userName
-                userAvatar.value = userInfo.userAvatar
+                userAvatar.value = userInfo.avatar
                 if ((userInfo as any).userName) {
 
                     // userName.value = (userInfo as any).userName;
