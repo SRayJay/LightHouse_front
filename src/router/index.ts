@@ -18,12 +18,17 @@ const routes = [
     component: () =>import('@V/MySpace.vue'),
   },
   {
+    path:'/space/:id',
+    name:'Space',
+    component:()=>import('@V/Space.vue')
+  },
+  {
     path:"/setting",
     name:'Setting',
     component:() =>import('@V/Setting.vue')
   },
   {
-    path:'/search/:key',
+    path:'/search/kw=:key',
     name:"SearchResult",
     component:()=>import('@V/SearchResult.vue'),
   },

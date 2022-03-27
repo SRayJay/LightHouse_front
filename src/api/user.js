@@ -20,6 +20,20 @@ const api = {
       method:'post',
       data:data
     })
+  },
+  getUserInfo(data){
+    return request({
+      url:'/user/getUserInfo',
+      method:'get',
+      data:data
+    })
+  },
+  addFollow(data){
+    return request({
+      url:'/user/addFollow',
+      method:'post',
+      data
+    })
   }
 
   

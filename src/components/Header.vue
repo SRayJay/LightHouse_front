@@ -109,11 +109,7 @@ export default defineComponent({
                 let userInfo = JSON.parse(store.state.user.userInfo)
                 userName.value = userInfo.userName
                 userAvatar.value = userInfo.avatar
-                if ((userInfo as any).userName) {
 
-                    // userName.value = (userInfo as any).userName;
-                    // signature.value = (userInfo as any).signature;
-                }
             }
         };
 

@@ -28,12 +28,16 @@ export type Author = {
     books:Array<Book>
 }
 export type User = {
+    _id:string
     userName:string,
     avatar:string,
     background:string,
     signature:string,
     city:string,
     gender:number,
+    isFollow?:boolean,
+    focus:Array<string>,
+    followers:Array<string>,
     province:string
 }
 

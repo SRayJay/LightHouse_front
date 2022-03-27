@@ -46,6 +46,12 @@
                                 <SearchBook :book="book"></SearchBook>
                             </div>
                         </div>
+                        <div v-if="users.length > 0">
+                            <div class="result_title">用户：</div>
+                            <div v-for="user in users" :key="user._id">
+                                <SearchUser :user="user" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="rightBar"></div>
@@ -61,6 +67,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { Author, User, Book } from '@/types'
 import SearchAuthor from '@C/SearchAuthor.vue'
 import SearchBook from '@C/SearchBook.vue';
+import SearchUser from '@C/SearchUser.vue'
 const router = useRouter()
 const route = useRoute()
 let searchContent = ref<string>('')
@@ -73,6 +80,7 @@ api.search(searchContent.value).then((res) => {
     authors.value = res[1]
     books.value = res[0];
     users.value = res[2];
+    console.log(users.value)
 })
 const search = () => {
     console.log(searchContent.value)
@@ -80,6 +88,7 @@ const search = () => {
         authors.value = res[1]
         books.value = res[0];
         users.value = res[2];
+
     })
 }
 
