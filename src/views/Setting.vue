@@ -121,7 +121,7 @@ const store = useStore()
 let userName = ref<string>('');
 let signature = ref<string>('');
 let city = ref<string>('');
-let userInfo = reactive<User>({ userName: '', signature: '', city: '', avatar: '', background: '', gender: 0, province: '' })
+let userInfo = reactive<User>({ _id: '', followers: [], focus: [], userName: '', signature: '', city: '', avatar: '', background: '', gender: 0, province: '' })
 const getUserInfo = () => {
   userInfo = JSON.parse(store.state.user.userInfo)
   console.log(userInfo)

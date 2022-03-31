@@ -1,7 +1,7 @@
 <template>
-    <div id="container">
+    <div id="container" class="flex">
         <div class="leftTitle">{{ title }}</div>
-        <div v-if="bookList.length > 0" style="margin-left:53px;height: 200px;">
+        <div v-if="bookList.length > 0" class="flex" style="margin-left:53px;height: 200px;">
             <BookThumb
                 v-for="book in bookList.slice(0, 5)"
                 :key="book._id"

@@ -13,7 +13,7 @@
             <img v-for="(pic, index) in moment.pics" class="momentPic" :key="index" :src="pic" />
         </div>
         <div class="greyText mt30" style="text-align:left;margin-left:80px">{{ moment.create_time }}</div>
-        <div class="actionBar flex">
+        <div v-if="actable" class="actionBar flex">
             <div class="act" @click="like">
                 <div class="actContainer">
                     <like-outlined v-if="!moment.isLike" style="font-size: large;" />
@@ -64,6 +64,10 @@ export default defineComponent({
             type: Object,
             default: () => { }
         },
+        actable: {
+            type: Boolean,
+            default: true
+        }
     },
     setup(props, ctx) {
         const router = useRouter()

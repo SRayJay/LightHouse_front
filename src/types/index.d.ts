@@ -47,7 +47,17 @@ export type Review = {
     content:string,
     text:string,
     publish_time:string,
-    related_book:{_id:string,name:string,cover:string,intro:string,author:{_id:string,name:string}},
+    related_book:{
+        _id:string,
+        name:string,
+        cover:string,
+        intro:string,
+        rate?:number,
+        author:{
+            _id:string,
+            name:string
+        }
+    },
     likes:Array<string>,
     comments:Array<string>,
     writer:{_id:string,userName:string,avatar:string,signature:string},
@@ -55,7 +65,12 @@ export type Review = {
 export type Moment = {
     _id:string,
     content:string,
-    creator:string,
+    creator:{
+        _id:string,
+        userName:string,
+        avatar:string,
+        signature:string
+    },
     create_time:string,
     replys:Array<string>,
     likes:Array<string>,

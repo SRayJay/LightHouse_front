@@ -105,7 +105,11 @@ let activeKey = ref('1')
 
 
 const toWriteReview = () => {
-
+    if (store.state.user.token) {
+        router.push({ name: 'ReviewEdit' })
+    } else {
+        message.error('请登录后操作', 1.5)
+    }
 }
 
 const previewVisible = ref(false);

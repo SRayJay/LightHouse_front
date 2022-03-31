@@ -34,6 +34,20 @@ const api = {
       method:'post',
       data
     })
+  },
+  getSpaceInfo(id){
+    return request({
+      url:'/user/getSpaceInfo',
+      method:'get',
+      data:id
+    })
+  },
+  getHaveRead(id){
+    return request({
+      url:'/user/getHaveRead',
+      method:'get',
+      data:id
+    })
   }
 
   

@@ -18,8 +18,14 @@
                         >{{ bookInfo.producer ? (bookInfo.producer + '·') : '' + bookInfo.publisher }}</div>
                     </div>
                 </div>
-                <div v-else>
-                    <!-- <div class="bookcover" @click="selectBook"></div> -->
+                <div class="flex" v-else>
+                    <div class="bookcover" @click="selectBook">
+                        <img src="src/assets/icon/no_book.png" />
+                    </div>
+                    <div class="flex flex-column ml15" style="text-align: left;">
+                        <div class="bookName">从书单中挑选一门书吧</div>
+                        <button v-if="!nobook" class="reselectBtn" @click="reselect">重选</button>
+                    </div>
                 </div>
             </div>
             <div>
@@ -44,10 +50,15 @@
                 </div>
             </div>
         </div>
+        <a-modal v-model:visible="showSelectModal" title="选择书籍" width="30%">
+            <span style="float:left;margin-bottom:10px;font-size:16px;">我已读的书单:</span>
+            <a-table :dataSource="haveRead" :columns="selectColumns"></a-table>
+        </a-modal>
+        <a-spin :spinning="spinning" />
     </div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, h } from 'vue'
 import Header from '@C/Header.vue'
 import { BASEURL } from '@/config'
 import { useRoute, useRouter } from 'vue-router'
@@ -55,8 +66,11 @@ import E from 'wangeditor'
 import { simplifyCountry } from '@/utils/utils'
 import editorApi from '@/api/editor';
 import { message, Modal } from 'ant-design-vue'
+import { LoadingOutlined } from '@ant-design/icons-vue'
 import { useStore } from 'vuex'
 import router from '@/router'
+import userApi from '@/api/user'
+const spinning = ref<Boolean>(false)
 let nobook = ref<Boolean>(true);
 let bookInfo = ref({ _id: '', name: '', cover: '', author: { name: '', country: '' }, producer: '', publisher: '' })
 const route = useRoute()
@@ -64,9 +78,8 @@ const store = useStore()
 let editor = ref(null);
 let edittext = ref(null);
 let toolbar = ref(null)
-if (route.params.book) {
+if (!!route.params.book) {
     nobook.value = false
-    // console.log(JSON.parse(route.params.book as string))
     bookInfo.value = JSON.parse(route.params.book as string)
     console.log(bookInfo.value)
 } else {
@@ -117,6 +130,34 @@ const checkAndShowDlg = () => {
 
     }
 }
+
+let haveRead = ref([])
+let showSelectModal = ref<Boolean>(false)
+let selectColumns = [{
+    title: '书名',
+    dataIndex: 'name',
+}, {
+    title: '作者',
+    dataIndex: 'author',
+}, {
+    title: '出版社',
+    dataIndex: 'publisher',
+}]
+const selectBook = () => {
+    showSelectModal.value = true
+    spinning.value = true
+    haveRead.value = []
+    userApi.getHaveRead(JSON.parse(store.state.user.userInfo)._id).then((res) => {
+        res.forEach((i) => {
+            haveRead.value.push({ name: i.name, publisher: i.publisher, author: i.author.name })
+        })
+        spinning.value = false
+    })
+}
+const reselect = () => {
+
+}
+
 function formatContent(text: string) {
     text = text.replace(/&nbsp;/g, '')
     text = text.replace(/&amp;/g, '&')
