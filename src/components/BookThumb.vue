@@ -1,8 +1,12 @@
 <template>
     <div class="bookthumb" @click="toBookDetail">
-        <a-popover placement="right" :title="bookTitle">
-            <template class="popcontent" #content>
-                <p>{{ bookIntro.slice(0, 100) + '...' }}</p>
+        <a-popover
+            placement="right"
+            :title="bookTitle"
+            :getPopupContainer="triggerNode => triggerNode.parentNode"
+        >
+            <template #content>
+                <div>{{ bookIntro.slice(0, 100) + '...' }}</div>
             </template>
             <div class="book_card">
                 <img v-if="shadeBook" class="overpic" :src="BASEURL + '/img/more.png'" />
@@ -65,10 +69,7 @@ export default defineComponent({
     position: relative;
     margin: 20px 25px;
     cursor: pointer;
-    .popcontent {
-        width: 200px;
-        height: 500px;
-    }
+
     .book_card {
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
@@ -105,5 +106,8 @@ export default defineComponent({
         top: 40%;
         transform: translate(-50%, -50%);
     }
+}
+:deep(.ant-popover-inner-content) {
+    width: 200px;
 }
 </style>

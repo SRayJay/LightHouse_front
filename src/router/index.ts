@@ -65,6 +65,10 @@ const routes = [
     path:'/community',
     name:'Community',
     component:()=>import('@V/Community.vue')
+  },{
+    path:'/category',
+    name:'Category',
+    component:()=>import('@V/Category.vue')
   }
 ];
 

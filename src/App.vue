@@ -39,10 +39,49 @@ import Footer from "@C/Footer.vue";
   /* position: absolute; */
   /* bottom: 0; */
 }
-* {
+// .ant-popover-inner-content {
+//   width: 200px;
+// }
+body,
+div,
+span,
+header,
+footer,
+nav,
+section,
+aside,
+article,
+ul,
+dl,
+dt,
+dd,
+li,
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+i,
+b,
+textarea,
+button,
+input,
+select,
+figure,
+figcaption {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font-style: normal;
+  font-family: "PingFangSC-Regular";
+  &:focus {
+    outline: none;
+  }
 }
 ul {
   list-style: none;
@@ -51,9 +90,5 @@ ul {
 input,
 button {
   outline: none;
-}
-a {
-  text-decoration: none;
-  color: #000;
 }
 </style>

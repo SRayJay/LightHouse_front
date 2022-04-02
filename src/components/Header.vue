@@ -16,7 +16,7 @@
                     <div>排行榜</div>
                 </li>
                 <li class="nav">
-                    <div>分类</div>
+                    <div @click="router.push('/category')">分类</div>
                 </li>
                 <li class="nav">
                     <div>专栏</div>

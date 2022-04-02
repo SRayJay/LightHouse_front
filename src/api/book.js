@@ -22,6 +22,13 @@ const api = {
             method:'post',
             data:param
         })
+    },
+    getBooksByBelong(key){
+        return request({
+            url:'/book/getBooksByBelong',
+            method:'get',
+            data:key
+        })
     }
 }
 export default api;
