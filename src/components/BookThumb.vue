@@ -76,10 +76,11 @@ export default defineComponent({
     }
     .pic {
         width: 131px;
-        height: 180px;
+        max-height: 200px;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }
+
     .bookname {
         color: #009af9;
         overflow: hidden;
@@ -109,5 +110,9 @@ export default defineComponent({
 }
 :deep(.ant-popover-inner-content) {
     width: 200px;
+}
+:deep(.ant-image-img) {
+    width: 131px;
+    max-height: 200px;
 }
 </style>

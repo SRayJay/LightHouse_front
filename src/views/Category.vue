@@ -113,7 +113,7 @@
             <div v-if="showList.length === 0" style="margin-top: 40px;">暂无书籍</div>
             <div v-else class="flex content-box">
                 <BookThumb
-                    v-for="book in showList"
+                    v-for="book in showList.slice((currentPage - 1) * 12, currentPage * 12)"
                     :key="book._id"
                     :book-title="book.name"
                     :book-author="book.author.name"
@@ -123,6 +123,13 @@
                     class="booklist"
                 ></BookThumb>
             </div>
+            <a-pagination
+                class="pagination"
+                v-model:current="currentPage"
+                :total="showList.length"
+                show-less-items
+                :defaultPageSize="12"
+            />
         </div>
     </div>
 </template>
@@ -150,7 +157,8 @@ const filterToItem = (type, index) => {
     showList.value = bookList.value.filter((item) => item.classify === type)
 }
 const changeActiveKey = (key: string) => {
-    getBooks(key)
+    let keylist = ['', '中国现当代文学', '中国古典文学', '海外华语文学', '美国文学', '日本文学', '英国文学', '法国文学', '拉美文学', '俄国文学', '德国文学', '其他文学']
+    getBooks(keylist[key])
 }
 bookApi.getBooksByBelong('中国现当代文学').then(res => {
     bookList.value = res;
@@ -159,7 +167,8 @@ bookApi.getBooksByBelong('中国现当代文学').then(res => {
 
 
 let loading = ref<boolean>(false)
-
+let currentPage = ref<number>(1)
+let pageSize = 12
 </script>
 <style lang="less" scoped>
 .wrap {
@@ -192,12 +201,21 @@ let loading = ref<boolean>(false)
         width: 765px;
         height: 950px;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+        position: relative;
         .content-box {
             height: 860px;
             flex-wrap: wrap;
             align-content: flex-start;
             padding-left: 20px;
             padding-top: 20px;
+        }
+        .pagination {
+            // margin-top: auto;
+            // position: absolute;
+            margin: 0 auto;
+            height: 90px;
+            line-height: 90px;
+            // bottom: 20px;
         }
     }
 }
