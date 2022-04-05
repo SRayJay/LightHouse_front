@@ -73,15 +73,9 @@ const actions = {
     register({ commit }, registerform) {
         return new Promise((resolve, reject) => {
             api.register(registerform).then(res=>{
-                console.log(res)
-                if (res.data.code === 400) {
-                    reject(400)
-                } else if (res.data.code === 200) {
-                    let userinfo = JSON.stringify(res.data.user)
-                    commit('SET_TOKEN', res.data.token)
-                    commit('SET_USERINFO', userinfo)
-                    
-                }
+                let userinfo = JSON.stringify(res.user)
+                commit('SET_TOKEN', res.token)
+                commit('SET_USERINFO', userinfo)
                 resolve()
             }).catch(error => {
                 reject(error)

@@ -113,13 +113,13 @@ function request(options){
     service.defaults.baseURL = BASEURL
     return service(options)
 }
-['get','post','put','delete','patch'].forEach((item)=>{
+['get','post','put','delete','patch','options'].forEach((item)=>{
     request[item] = (url,data,params)=>{
         return request({
             url,
             data,
             method:item,
-            ...options
+            // ...options
         })
     }
 })   

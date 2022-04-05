@@ -16,7 +16,7 @@ function simplifyCountry(country:string){
         return item==country
     })
 
-    return simples[n];
+    return '['+simples[n]+']';
 }
 
 // 图片上传预览

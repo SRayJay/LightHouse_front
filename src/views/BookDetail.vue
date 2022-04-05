@@ -90,7 +90,7 @@
                         >{{ review.text }}</div>
                         <div class="likes">
                             <div class="likes_icon">
-                                <img src="src/assets/icon/like.png" />
+                                <img src="@/assets/icon/like.png" />
                             </div>
                             <div class="likes_num">{{ review.likes ? review.likes.length : 0 }}</div>
                         </div>

@@ -68,10 +68,4 @@ export default defineComponent({
     font-size: 14px;
     color: #797979;
 }
-.bookthumb_list {
-    // position: absolute;
-    // float: left;
-    // left: 37px;
-    // top: 40px;
-}
 </style>

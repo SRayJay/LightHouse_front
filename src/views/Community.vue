@@ -24,23 +24,23 @@
                 <div class="actionBarContainer">
                     <div class="iconBar">
                         <div class="actSingle" @click="toWriteReview">
-                            <img src="src/assets/icon/review.png" />
+                            <img src="@/assets/icon/review.png" />
                             <div class="act_text">写书评</div>
                         </div>
                         <div class="actSingle" @click="showMomentEdit = true">
-                            <img src="src/assets/icon/moment.png" />
+                            <img src="@/assets/icon/moment.png" />
                             <div class="act_text">发动态</div>
                         </div>
                     </div>
                     <div class="threeEntry">
                         <div class="entrySingle" @click="toMoments">
-                            <img src="src/assets/icon/shoucang.svg" /> 我的动态
+                            <img src="@/assets/icon/shoucang.svg" /> 我的动态
                         </div>
                         <div class="entrySingle" @click="toBookLists">
-                            <img src="src/assets/icon/shudan.svg" /> 我的书单
+                            <img src="@/assets/icon/shudan.svg" /> 我的书单
                         </div>
                         <div class="entrySingle" @click="toReviews">
-                            <img src="src/assets/icon/xiaoxi.svg" /> 我的书评
+                            <img src="@/assets/icon/xiaoxi.svg" /> 我的书评
                         </div>
                     </div>
                 </div>

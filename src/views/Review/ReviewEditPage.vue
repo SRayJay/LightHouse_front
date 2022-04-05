@@ -20,7 +20,7 @@
                 </div>
                 <div class="flex" v-else>
                     <div class="bookcover" @click="selectBook">
-                        <img src="src/assets/icon/no_book.png" />
+                        <img src="@/assets/icon/no_book.png" />
                     </div>
                     <div class="flex flex-column ml15" style="text-align: left;">
                         <div class="bookName">从书单中挑选一门书吧</div>
