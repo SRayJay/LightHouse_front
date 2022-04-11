@@ -15,7 +15,7 @@
                         >{{ simplifyCountry(bookInfo.author.country) + bookInfo.author.name }}</div>
                         <div
                             class="pubinfo"
-                        >{{ bookInfo.producer ? (bookInfo.producer + '·') : '' + bookInfo.publisher }}</div>
+                        >{{ (bookInfo.producer ? (bookInfo.producer + '·') : '') + bookInfo.publisher }}</div>
                     </div>
                 </div>
                 <div class="flex" v-else>

@@ -19,18 +19,33 @@
             <div class="barContainer">
                 <div class="mtitle mb10">我的动态</div>
                 <BtnMore class="btnMore" @to-more="toMoments"></BtnMore>
+                <div v-if="moments.length===0" style="margin:20px 0;color:#7f7f7f">暂无动态</div>
                 <CommunityMoment v-if="moments.length > 0" :actable="false" :moment="moments[0]"></CommunityMoment>
-                <div class="cutline"></div>
+                <div v-if="moments.length>1" class="cutline"></div>
                 <CommunityMoment v-if="moments.length > 1" :actable="false" :moment="moments[1]"></CommunityMoment>
+                
             </div>
             <div class="barContainer">
                 <div class="mtitle">我的书摘</div>
+                <BtnMore class="btnMore" @to-more='toExcerpts'></BtnMore>
+                <div v-if="excerpts.length===0" style="margin:20px 0;color:#7f7f7f">暂无书摘</div>
+                 <div class="excerpt_item"
+                    v-for="excerpt in excerpts.slice(0,2)"
+                    :key="excerpt._id">
+                    <div>
+                        <img :src="BASEURL+excerpt.related_book.cover" width="67" height="100" />
+                    </div>
+                        <div class="excerpt_content">
+                            {{excerpt.text}}
+                        </div>
+                    </div>
             </div>
             <div class="barContainer">
                 <div class="mtitle">我的书评</div>
                 <BtnMore class="btnMore" @to-more="toReviews"></BtnMore>
+                <div v-if="reviews.length===0" style="margin:20px 0;color:#7f7f7f">暂无书评</div>
                 <ReviewItem v-if="reviews.length > 0" :review="reviews[0]"></ReviewItem>
-                <div class="cutline"></div>
+                <div v-if="reviews.length>1" class="cutline"></div>
                 <ReviewItem v-if="reviews.length > 1" :review="reviews[1]"></ReviewItem>
             </div>
             <div class="barContainer">
@@ -48,15 +63,18 @@ import { ref, reactive, onMounted } from 'vue'
 import api from '@/api/user'
 import Header from '@C/Header.vue'
 import { useStore } from 'vuex'
+import {useRouter} from 'vue-router'
 import { BASEURL } from '@/config'
 import BookListLine from '@C/BookListLine.vue'
 import CommunityMoment from '@C/CommunityMoment.vue'
 import ReviewItem from '@C/ReviewItem.vue'
 import BtnMore from '@C/BtnMore.vue'
-import { Moment, Book, Review } from '@/types'
+import { Moment, Book, Review, Excerpt } from '@/types'
 const store = useStore()
+const router = useRouter()
 const userInfo = JSON.parse(store.state.user.userInfo)
 console.log('userInfo', userInfo)
+let excerpts = ref<Excerpt[]>([])
 let moments = ref<Moment[]>([{ _id: '', creator: { _id: '', userName: '', avatar: '', signature: '' }, create_time: '', content: '', pics: [''], replys: [], likes: [] }])
 let wantRead = ref<Book[]>([])
 let reading = ref<Book[]>([])
@@ -68,10 +86,10 @@ api.getSpaceInfo(userInfo._id).then(res => {
     reading.value = res.reading.reverse()
     haveRead.value = res.haveRead.reverse()
     reviews.value = res.reviews.reverse()
-
+    excerpts.value = res.excerpts.reverse()
 })
 const toBookList = () => {
-    console.log('toList')
+    router.push({name:'SpaceBookLists',params:{userName:'我',userId:userInfo._id}})
 }
 const toReviews = () => {
 
@@ -79,6 +97,10 @@ const toReviews = () => {
 const toMoments = () => {
 
 }
+const toExcerpts = () => {
+
+}
+
 </script>
 <style lang="less" scoped>
 .wrap {
@@ -127,6 +149,24 @@ const toMoments = () => {
     padding: 20px;
     position: relative;
 }
+.excerpt_item{
+    display:flex;
+    margin:20px 0;
+    .excerpt_content{
+        cursor:pointer;
+        margin-left:20px;
+        width:800px;
+        // font-size: 0.875rem;
+        color:#7f7f7f;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: -o-ellipsis-lastline;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
+}
 .btnMore {
     position: absolute;
     right: 20px;
@@ -139,7 +179,7 @@ const toMoments = () => {
     margin-left: 0px;
     margin-top: 0px;
     /* color: #03B615; */
-    color: #0a7101;
+    color: @title_green;
 }
 .cutline {
     width: 100%;

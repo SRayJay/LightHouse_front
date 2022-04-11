@@ -8,7 +8,7 @@
                 <div class="bookName">《{{ review.related_book.name }}》</div>
                 <a-rate :value="review.related_book.rate"></a-rate>
             </div>
-            <div class="reviewText">{{ review.text }}</div>
+            <div class="reviewText">{{ formatContent(review.text) }}</div>
         </div>
     </div>
 </template>
@@ -22,6 +22,11 @@ defineProps({
         default: () => { }
     }
 })
+function formatContent(text: string) {
+    text = text.replace(/&nbsp;/g, '')
+    text = text.replace(/&amp;/g, '&')
+    return text
+}
 </script>
 <style lang="less" scoped>
 .l_wrap {

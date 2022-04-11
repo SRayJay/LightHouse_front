@@ -77,6 +77,10 @@ const routes = [
     path:'/category',
     name:'Category',
     component:()=>import('@V/Category.vue')
+  },{
+    path:'/bookLists',
+    name:'SpaceBookLists',
+    component:()=>import('@V/Space/SpaceBookLists.vue')
   }
 ];
 

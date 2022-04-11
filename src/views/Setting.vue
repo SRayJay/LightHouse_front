@@ -12,7 +12,7 @@
               class="avatar-uploader"
               :show-upload-list="false"
               :beforeUpload="beforeUpload"
-              action="http://localhost:5000/upload/avatar"
+              action="http://120.53.125.13:5000/upload/avatar"
               @change="handleChangeAvatar"
             >
               <img v-if="avatarUrl" :src="avatarUrl" class="avatar" />
@@ -71,7 +71,7 @@
             class="backgroundUpload"
             :show-upload-list="false"
             :beforeUpload="beforeUpload"
-            action="http://localhost:5000/upload/background"
+            action="http://120.53.125.13:5000/upload/background"
             @change="handleChangeBack"
           >
             <img v-if="backUrl" :src="backUrl" class="backgroundUpload" />

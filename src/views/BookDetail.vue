@@ -98,7 +98,7 @@
                         <div
                             class="review_content"
                             @click="toReviewContent(review._id)"
-                        >{{ review.text }}</div>
+                        >{{ formatContent(review.text) }}</div>
                         <div class="likes">
                             <div class="likes_icon">
                                 <img src="@/assets/icon/like.png" />
@@ -128,14 +128,19 @@
                 <div class="relatedBook">
                     <div class="mtitle">相关书籍</div>
                     <div class="booklist">
-                        <BookThumb v-for="book in recommends"
-                        :key="book._id"
-                        :book-title="book.name"
-                        :book-author="book.author.name"
-                        :book-intro="book.intro"
-                        :book-pic="book.cover"
-                        :book-id="book._id"
-                        ></BookThumb>
+                        <div v-for="(book,index) in relatedBooks.slice(0,5)" :key="index" class="book_single" @click="toBookDetails(book._id)">
+                            <img :src="BASEURL+book.cover" class="related_pic">
+                            <div class="flex flex-column">
+                                <span class="related_title">{{ book.name }}</span>
+                                <div class="related_author">{{ book.author.name }}</div>
+                                <a-rate
+                                    :value="book.rate"
+                                    class="related_rate"
+                                    disabled
+                                    text-color="#ff9900"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -186,7 +191,7 @@ let isWantRead = ref<boolean>(false)
 let isReading = ref<boolean>(false)
 let isHaveRead = ref<boolean>(false)
 
-let recommends = reactive([])
+let relatedBooks = reactive([])
 const getBookData = () => {
     bookapi.getBook(route.params.id).then((res) => {
         console.log(res)
@@ -201,9 +206,9 @@ const getBookData = () => {
     })
     bookapi.getRelatedBooks(bookData.value._id).then((res) => {
      res.forEach(e => {
-        recommends.push(e)
+        relatedBooks.push(e)
     });
-    console.log(recommends)
+    console.log(relatedBooks)
 })
 }
 getBookData()
@@ -246,6 +251,11 @@ const bookAct = (type) => {
         console.log(res)
         getBookData()
     })
+}
+function formatContent(text: string) {
+    text = text.replace(/&nbsp;/g, '')
+    text = text.replace(/&amp;/g, '&')
+    return text
 }
 </script>
 <style lang="less" scoped>
@@ -413,6 +423,38 @@ const bookAct = (type) => {
     padding-left: 1em;
     padding-top: 1em;
     min-height: 500px;
+    .booklist{
+        margin:20px 0 0 30px;
+        .book_single{
+            margin-bottom:30px;
+            display:flex;
+            cursor:pointer;
+            .related_pic{
+                width:86px;
+                height:120px;
+            }
+            .related_title{
+                width:140px;
+                padding-left: 10px;
+                padding-right: 10px;
+                font-size: 15px;
+                color: #3379c6; 
+                overflow:hidden;
+                text-overflow:ellipsis;
+                white-space:nowrap;   
+            }
+            .related_author{
+                // height: 30px;
+                font-size: 14px;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .related_rate{
+                margin-top:auto;
+                height: 30px;
+            }
+        }
+    }
 }
 .subtitle {
     color: @light_green;

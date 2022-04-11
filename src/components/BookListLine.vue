@@ -41,7 +41,7 @@ export default defineComponent({
 </script>
 <style lang="less" scoped>
 #container {
-    height: 200px;
+    height: 250px;
     width: 100%;
     margin-top: 15px;
     .leftTitle {

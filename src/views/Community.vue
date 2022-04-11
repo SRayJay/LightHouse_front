@@ -56,7 +56,7 @@
                 ></a-textarea>
                 <a-upload
                     v-model:file-list="fileList"
-                    action="http://localhost:5000/upload/moment"
+                    action="http://120.53.125.13:5000/upload/moment"
                     list-type="picture-card"
                     @preview="handlePreview"
                     :beforeUpload="beforeUpload"

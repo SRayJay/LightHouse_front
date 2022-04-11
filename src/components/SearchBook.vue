@@ -3,9 +3,9 @@
         <img :src="BASEURL + book.cover" class="bookcover" />
         <div class="container flex flex-column">
             <div class="bookName">{{ book.name }}</div>
-            <a-rate :value="2" disabled></a-rate>
+            <a-rate :value="0" disabled></a-rate>
             <div class="rate_num">{{ book.rate.toFixed(1) }}</div>
-            <div class="bookInfo">{{ simplifyCountry(book.author.country) }}</div>
+            <div class="bookInfo">{{ simplifyCountry(book.author.country)+ book.author.name }}</div>
         </div>
     </div>
     <div class="divider"></div>
@@ -70,7 +70,7 @@ export default defineComponent({
         .bookInfo {
             text-align: left;
             font-size: 14px;
-            margin-top: 15px;
+            margin-top: 5px;
         }
     }
 }
