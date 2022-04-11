@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <div style="border-top:1px dashed #cccccc;height: 1px;overflow:hidden" />
-    <div class="text">© 2020城北书苑 chengbei.site, all rights reserved 杭州城北科技有限公司 浙ICP备19026326号</div>
+    <div class="text">© 2022 LightHouse, all rights reserved </div>
     <div class="placeholder" />
   </div>
 </template>

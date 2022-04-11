@@ -4,10 +4,10 @@
             <div class="header">
                 <div class="bar">
                     <router-link to="/">
-                        <div class="logo">
+                        <!-- <div class="logo">
                             <img class="logo_pic" src="@/assets/logo.png" />
-                        </div>
-                        <div class="logo_txt">CITYNORTH</div>
+                        </div> -->
+                        <div class="logo_txt">LightHouse</div>
                     </router-link>
                 </div>
             </div>

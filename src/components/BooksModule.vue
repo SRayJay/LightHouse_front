@@ -1,10 +1,10 @@
 <template>
     <div class="content">
-        <div class="title">热门书籍</div>
-        <div class="subtitle">总有一些文字能够直击心灵</div>
+        <div class="title">{{title}}</div>
+        <div class="subtitle">{{subTitle}}</div>
         <div class="flex wrap">
             <BookThumb
-                v-for="book in hotBooks"
+                v-for="book in books"
                 :key="book._id"
                 :book-title="book.name"
                 :book-author="book.author.name"
@@ -22,21 +22,29 @@ import { ref, reactive, defineComponent, PropType, } from 'vue'
 import { Book } from '../types'
 
 export default defineComponent({
-    name: 'HotBooks',
+    name: 'BooksModule',
     components: {
         BookThumb,
     },
     props: {
-        'hotBooks': {
+        'books': {
             type: Array as PropType<Book[]>,
             default: () => {
                 return []
             }
+        },
+        'title':{
+            type: String,
+            default:''
+        },
+        'subTitle':{
+            type:String,
+            default:''
         }
     },
 
     setup(prop) {
-        console.log('prp', prop.hotBooks)
+        console.log('prp', prop.books)
 
     }
 })

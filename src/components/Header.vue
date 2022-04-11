@@ -2,9 +2,9 @@
     <div class="header">
         <div class="content">
             <ul class="nav_line">
-                <li class="logo">
+                <!-- <li class="logo">
                     <img class="logo_pic" alt="Vue logo" src="@/assets/logo.png" />
-                </li>
+                </li> -->
                 <li class="logo_txt">LightHouse</li>
                 <li class="nav">
                     <div @click="router.push('/')">主页</div>
@@ -93,8 +93,10 @@ export default defineComponent({
     setup() {
         const router = useRouter()
         const store = useStore()
+        let search_word = ref(null)
         const search = () => {
-
+            console.log(search_word.value.value)
+            router.push({ name: 'SearchResult', params: { key: search_word.value.value } })
         }
 
 
@@ -143,6 +145,7 @@ export default defineComponent({
         }
         return {
             search,
+            search_word,
             isLogin,
             BASEURL,
             toMySpace,
@@ -214,6 +217,7 @@ export default defineComponent({
                     padding: 0.2em 0;
                     border-top-right-radius: 8px;
                     border-bottom-right-radius: 8px;
+                    cursor: pointer;
                     background: rgba(122, 122, 122, 1);
                     img {
                         width: 20px;

@@ -113,6 +113,6 @@ export default defineComponent({
 }
 :deep(.ant-image-img) {
     width: 131px;
-    max-height: 200px;
+    height: 195px;
 }
 </style>

@@ -22,6 +22,20 @@ const api = {
         data:id
       })
     },
+    publishExcerpt(data){
+      return request({
+        url:'/editor/publishExcerpt',
+        method:'post',
+        data
+      })
+    },
+    getExcerpt(id){
+      return request({
+        url:'/editor/getExcerpt',
+        method:'get',
+        data:id
+      })
+    },
     publishComment(data){
       return request({
         url:'/editor/publishComment',

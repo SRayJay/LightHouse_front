@@ -4,15 +4,15 @@
         <div class="wrap">
             <div class="authorInfoBar flex">
                 <img :src="BASEURL + author.photo" class="authorphoto" />
-                <div class="flex flex-column ml30">
+                <div class="flex flex-column ml30" style="text-align: left;">
                     <div class="authorname">{{ author.name }}</div>
                     <div class="info">
-                        <div class="authorCountry">国籍：{{ author.country }}</div>
+                        <div class="authorCountry">国家/地区：{{ author.country }}</div>
                         <div
-                            v-if="author.deathday"
+                            v-if="author.death"
                             class="date"
-                        >生卒日期：{{ author.birthday }} 至 {{ author.deathday }}</div>
-                        <div v-else class="date">出生日期：{{ author.birthday }}</div>
+                        >生卒日期：{{ author.birth }} 至 {{ author.death }}</div>
+                        <div v-else class="date">出生日期：{{ author.birth }}</div>
                     </div>
                 </div>
             </div>
@@ -26,11 +26,12 @@
                 <div class="cutline"></div>
                 <div class="flex">
                     <BookThumb
-                        v-for="book in author.books"
+                        v-for="book in author.books.slice(0, 5)"
                         :key="book._id"
                         :book-title="book.name"
                         :book-pic="book.cover"
                         :book-id="book._id"
+                        :book-intro="book.intro"
                     />
                 </div>
             </div>
@@ -48,7 +49,7 @@ import BookThumb from '@/components/BookThumb.vue';
 const route = useRoute()
 const router = useRouter()
 // let booklist = reactive([])
-let author = ref<Author>({ name: '', photo: '', intro: '', birthday: '', deathday: '', books: [], nobel: 0, country: '', _id: '' })
+let author = ref<Author>({ name: '', photo: '', intro: '', birth: '', death: '', books: [], nobel: 0, country: '', _id: '' })
 api.getAuthorById(route.params.id).then((res) => {
 
     author.value = res
@@ -82,8 +83,6 @@ api.getAuthorById(route.params.id).then((res) => {
             font-size: 0.875rem;
             margin-top: 15px;
         }
-    }
-    .bookBar {
     }
 }
 .subtitle {

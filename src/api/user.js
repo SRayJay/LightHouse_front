@@ -52,7 +52,8 @@ const api = {
       method:'get',
       data:id
     })
-  }
+  },
+ 
 
   
 }

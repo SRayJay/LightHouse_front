@@ -29,6 +29,20 @@ const api = {
             method:'get',
             data:key
         })
+    },
+    getRecommendBooks(data){
+        return request({
+          url:'/book/getRecommendBooks',
+          method:'get',
+          data
+        })
+      },
+    getRelatedBooks(bookid){
+        return request({
+            url:'/book/getRelatedBooks',
+            method:'get',
+            data:bookid
+        })
     }
 }
 export default api;

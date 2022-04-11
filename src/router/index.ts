@@ -62,6 +62,14 @@ const routes = [
     name:'ReviewContent',
     component:()=>import('@V/Review/ReviewContentPage.vue')
   },{
+    path:'/excerptedit',
+    name:'ExcerptEdit',
+    component:()=>import('@V/Excerpt/ExcerptEditPage.vue')
+  },{
+    path:'/excerpt/:id',
+    name:'ExcerptContent',
+    component:()=>import('@V/Excerpt/ExcerptContentPage.vue')
+  },{
     path:'/community',
     name:'Community',
     component:()=>import('@V/Community.vue')

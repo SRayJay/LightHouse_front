@@ -23,8 +23,8 @@ export type Author = {
     _id:string,
     nobel:number,
     photo:string,
-    birthday:string,
-    deathday:string,
+    birth:string,
+    death:string,
     books:Array<Book>
 }
 export type User = {
@@ -61,6 +61,32 @@ export type Review = {
     likes:Array<string>,
     comments:Array<string>,
     writer:{_id:string,userName:string,avatar:string,signature:string},
+}
+export type Excerpt = {
+    _id:string,
+    page:number,
+    content:string,
+    text:string,
+    publish_time:string,
+    related_book:{
+        _id:string,
+        name:string,
+        cover:string,
+        intro:string,
+        rate?:number,
+        author:{
+            _id:string,
+            name:string
+        }
+    },
+    likes:Array<string>,
+    comments:Array<string>,
+    writer:{
+        _id:string,
+        userName:string,
+        avatar:string,
+        signature:string
+    }
 }
 export type Moment = {
     _id:string,

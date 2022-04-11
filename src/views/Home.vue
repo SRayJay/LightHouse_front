@@ -18,12 +18,13 @@
                 </div>
             </div>
         </div>
-        <HotBooks :hotBooks="hotBooks"></HotBooks>
+        <BooksModule title="热门书籍" subTitle="总有一些文字能够直击心灵" :books="hotBooks"></BooksModule>
+        <BooksModule title="推荐书籍" subTitle="好书推荐" :books="recommends"></BooksModule>
     </div>
 </template>
 <script setup lang="ts">
 import Header from '@C/Header.vue';
-import HotBooks from '@C/HotBooks.vue'
+import BooksModule from '@C/BooksModule.vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { ref, reactive, onMounted, } from 'vue'
@@ -48,7 +49,13 @@ api.getHotBooks().then((res) => {
     loadHotBooks.value = false
     console.log(hotBooks)
 })
-
+let recommends = reactive<Array<Book>>([])
+api.getRecommendBooks().then(res=>{
+    res.forEach(e => {
+        recommends.push(e)
+    });
+    console.log(recommends)
+})
 onMounted(() => {
 
 })

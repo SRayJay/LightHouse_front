@@ -79,10 +79,9 @@
               class="backgroundUpload"
               v-else-if="userInfo.background"
               :src="BASEURL + userInfo.background"
-              alt="avatar"
             />
-            <div class="avatar" v-else>
-              <img class="defaultAvatar" src="@/assets/default_avatar.jpg" />
+            <div class="background" v-else>
+              <img class="defaultBack" src="@/assets/background.jpg" />
             </div>
           </a-upload>
         </div>
@@ -122,14 +121,7 @@ let userName = ref<string>('');
 let signature = ref<string>('');
 let city = ref<string>('');
 let userInfo = reactive<User>({ _id: '', followers: [], focus: [], userName: '', signature: '', city: '', avatar: '', background: '', gender: 0, province: '' })
-const getUserInfo = () => {
-  userInfo = JSON.parse(store.state.user.userInfo)
-  console.log(userInfo)
-  userName.value = userInfo.userName;
-  signature.value = userInfo.signature;
-  city.value = userInfo.city
-}
-getUserInfo()
+
 const checkName = () => { };
 
 // 性别
@@ -187,7 +179,15 @@ const beforeUpload = (file) => {
   }
   return isJpgOrPng && isLt4M;
 };
-
+const getUserInfo = () => {
+  userInfo = JSON.parse(store.state.user.userInfo)
+  console.log(userInfo)
+  userName.value = userInfo.userName;
+  signature.value = userInfo.signature;
+  city.value = userInfo.city
+  trueBackUrl.value = userInfo.background;
+}
+getUserInfo()
 // 保存信息
 const saveInfo = () => {
   let params = {
@@ -228,6 +228,15 @@ const saveInfo = () => {
     width: 100%;
     height: 100%;
     border-radius: 50%;
+  }
+}
+.background {
+  border-radius: 50%;
+  width: 512px;
+  height: 256px;
+  .defaultBack {
+    width: 100%;
+    height: 100%;
   }
 }
 .backgroundUpload {

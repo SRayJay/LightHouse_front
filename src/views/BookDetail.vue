@@ -66,6 +66,17 @@
                         </div>
                     </div>
                     <div class="cutline"></div>
+                    <div class="excerpt_item"
+                    v-for="excerpt in bookData.excerpts.slice(0,2)"
+                    :key="excerpt._id">
+                        <div class="excerpt_content">
+                            {{excerpt.text}}
+                        </div>
+                    </div>
+                    <div class="review_more">
+                        <RightOutlined :style="{ fontSize: '14px', color: '#3379cc' }" />
+                        所有书摘（{{ bookData.excerpts.length }}篇）
+                    </div>
                 </div>
                 <div class="intro">
                     <div class="flex">
@@ -105,7 +116,7 @@
                 <div class="book_rate">
                     <div class="mtitle">书籍评分</div>
                     <div class="flex flex-vcenter mt5">
-                        <a-rate class="rate mr10" :value="2" disabled />
+                        <a-rate class="rate mr10" :value="0" disabled />
                         <div class="rate_num">{{ bookData.rate }}</div>
                     </div>
                     <div class="flex flex-column readercnt">
@@ -116,7 +127,16 @@
                 </div>
                 <div class="relatedBook">
                     <div class="mtitle">相关书籍</div>
-                    <div class="booklist"></div>
+                    <div class="booklist">
+                        <BookThumb v-for="book in recommends"
+                        :key="book._id"
+                        :book-title="book.name"
+                        :book-author="book.author.name"
+                        :book-intro="book.intro"
+                        :book-pic="book.cover"
+                        :book-id="book._id"
+                        ></BookThumb>
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,6 +154,7 @@ import editorApi from '../api/editor'
 import { BASEURL } from '../config'
 import { EditOutlined, RightOutlined, StopTwoTone } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue';
+import BookThumb from '@C/BookThumb.vue'
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
@@ -165,6 +186,7 @@ let isWantRead = ref<boolean>(false)
 let isReading = ref<boolean>(false)
 let isHaveRead = ref<boolean>(false)
 
+let recommends = reactive([])
 const getBookData = () => {
     bookapi.getBook(route.params.id).then((res) => {
         console.log(res)
@@ -177,6 +199,12 @@ const getBookData = () => {
         // console.log(actState)
         console.log(bookData)
     })
+    bookapi.getRelatedBooks(bookData.value._id).then((res) => {
+     res.forEach(e => {
+        recommends.push(e)
+    });
+    console.log(recommends)
+})
 }
 getBookData()
 const toAuthorDetail = () => {
@@ -184,7 +212,11 @@ const toAuthorDetail = () => {
 }
 
 const toWriteExcerpts = () => {
-
+    if(store.state.user.token){
+        router.push({name:'ExcerptEdit',params:{book:JSON.stringify(bookData.value)}})
+    }else{
+        message.warning('登录后才能发表书摘')
+    }
 }
 const toWriteReview = () => {
     if (store.state.user.token) {
@@ -315,7 +347,21 @@ const bookAct = (type) => {
         }
     }
 }
+.excerpt_item{
 
+    .excerpt_content{
+        cursor:pointer;
+        // font-size: 0.875rem;
+        color:#7f7f7f;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: -o-ellipsis-lastline;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+}
 .review_item {
     margin: 1em 0;
     cursor: pointer;
